@@ -1,17 +1,28 @@
 import 'package:flutter/material.dart';
-import 'package:library_of_ohara/colors.dart';
-import 'package:library_of_ohara/fonts.dart';
-import 'package:library_of_ohara/login.dart';
+import 'package:library_of_ohara/application/register.dart';
+import 'package:library_of_ohara/themes/colors.dart';
+import 'package:library_of_ohara/themes/fonts.dart';
+import 'package:library_of_ohara/application/login.dart';
 
-class InitApp extends StatelessWidget {
+class InitApp extends StatefulWidget {
   const InitApp({super.key});
 
+  @override
+  State<InitApp> createState() => _InitAppState();
+}
+
+class _InitAppState extends State<InitApp> {
   void login(BuildContext context) {
     Navigator.push(
         context,
         MaterialPageRoute(
           builder: (context) => Login(),
         ));
+  }
+
+  void register(BuildContext context) {
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => Register()));
   }
 
   @override
@@ -37,7 +48,12 @@ class InitApp extends StatelessWidget {
                 onPressed: () {
                   login(context);
                 },
-                child: const Text("Iniciar Sesión"))
+                child: const Text("Iniciar Sesión")),
+            ElevatedButton(
+                onPressed: () {
+                  register(context);
+                },
+                child: Text("Crear una Cuenta"))
           ],
         ),
       ),
