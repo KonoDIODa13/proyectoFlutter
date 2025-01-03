@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:bcrypt/bcrypt.dart';
 import 'package:flutter/material.dart';
 import 'package:library_of_ohara/model/usuario.dart';
 import 'package:path/path.dart' as path;
@@ -37,16 +38,17 @@ class UserProvider extends ChangeNotifier {
       contrasena TEXT
   )
   ''');
-    print("creada la bd");
   }
 
   Future<bool> login(String nombre, String contra) async {
     var db = await getDB();
+    var contrasenaCifrada = BCrypt.hashpw(contra, BCrypt.gensalt());
     bool encontrado = false;
     var query = await db.query("usuario");
     if (query.isNotEmpty) {
       var user = await db.query("usuario",
-          where: "nombre= ? and pasword= ?", whereArgs: [nombre, contra]);
+          where: "nombre= ? and contrasena= ?",
+          whereArgs: [nombre, contrasenaCifrada]);
       if (user.isNotEmpty) {
         encontrado = true;
         setUsuario(Usuario.fromMap(user.first));
@@ -57,11 +59,14 @@ class UserProvider extends ChangeNotifier {
 
   Future<bool> register(Usuario usuarioRegistro) async {
     var db = await getDB();
+    var contrasenaCifrada =
+        BCrypt.hashpw(usuario.getContrasena(), BCrypt.gensalt());
+    usuario.setContrasena(contrasenaCifrada);
     bool creado = false;
     var query = await db.query("usuario");
     if (query.isNotEmpty) {
       var user = await db.query("usuario",
-          where: "nombre= ? and pasword= ?",
+          where: "nombre= ? and contrasena= ?",
           whereArgs: [
             usuarioRegistro.getNombre(),
             usuarioRegistro.getContrasena()
@@ -70,8 +75,6 @@ class UserProvider extends ChangeNotifier {
         insertarUsuario(usuarioRegistro);
         setUsuario(usuarioRegistro);
         creado = true;
-      } else {
-        print("usuario ya creado");
       }
     } else {
       insertarUsuario(usuarioRegistro);

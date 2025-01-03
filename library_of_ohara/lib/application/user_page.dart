@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:library_of_ohara/model/usuario.dart';
 import 'package:library_of_ohara/providers/user_provider.dart';
+import 'package:library_of_ohara/themes/colors.dart';
 import 'package:provider/provider.dart';
-import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
 class UserPage extends StatefulWidget {
   final Usuario usuario;
@@ -19,6 +19,34 @@ class _UserPageState extends State<UserPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: backgroundColor,
+      bottomNavigationBar: BottomNavigationBar(items: [
+        BottomNavigationBarItem(
+            icon: Icon(
+              Icons.library_books,
+              color: titleColor,
+            ),
+            backgroundColor: backgroundColor,
+            label: "Biblioteca"),
+        BottomNavigationBarItem(
+            icon: Icon(
+              Icons.home,
+              color: titleColor,
+            ),
+            backgroundColor: backgroundColor,
+            label: "Inicio"),
+        BottomNavigationBarItem(
+            icon: Icon(
+              Icons.bookmarks,
+              color: titleColor,
+            ),
+            backgroundColor: backgroundColor,
+            label: "Tus libros"),
+      ],
+      backgroundColor: backgroundColor,
+      currentIndex: 1 ,
+      fixedColor: titleColor,
+      unselectedItemColor: titleColor,),
       body: Center(child: Text(widget.usuario.getNombre())),
     );
   }

@@ -17,16 +17,7 @@ class Register extends StatefulWidget {
 
 class _RegisterState extends State<Register> {
   final _formKey = GlobalKey<FormState>();
-
   final provider = Provider.of<UserProvider>;
-
-  void volver(BuildContext context) {
-    Navigator.pop(context);
-  }
-
-  void login(BuildContext context) {
-    Navigator.push(context, MaterialPageRoute(builder: (context) => Login()));
-  }
 
   TextEditingController nombreController = TextEditingController();
 
@@ -65,27 +56,32 @@ class _RegisterState extends State<Register> {
 
   crearCuenta(BuildContext context) async {
     if (_formKey.currentState!.validate()) {
-      print("valores validos");
       var usuario = Usuario(
           nombre: nombreController.text,
           gmail: gmailController.text,
           contrasena: contrasenaController.text);
 
       if (await provider(context, listen: false).register(usuario)) {
-        print("usuario insertado");
-        goUserPage(context);
+        inicioUsuario(context);
       }
     } else {
-      print("error en la validacion");
     }
   }
 
-  goUserPage(BuildContext context) {
+  inicioUsuario(BuildContext context) {
     Navigator.push(
         context,
         MaterialPageRoute(
             builder: (context) =>
                 UserPage(usuario: provider(context, listen: false).getUser())));
+  }
+
+  void volver(BuildContext context) {
+    Navigator.pop(context);
+  }
+
+  void login(BuildContext context) {
+    Navigator.push(context, MaterialPageRoute(builder: (context) => Login()));
   }
 
   @override
