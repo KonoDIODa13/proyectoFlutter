@@ -45,15 +45,22 @@ class _InitAppState extends State<InitApp> {
         child: Column(
           children: [
             ElevatedButton(
+                style:
+                    ElevatedButton.styleFrom(backgroundColor: backgroundColor2),
                 onPressed: () {
                   login(context);
                 },
-                child: const Text("Iniciar Sesión")),
+                child: Text(
+                  "Iniciar Sesión",
+                  style: TextStyle(color: titleColor),
+                )),
             ElevatedButton(
+                style:
+                    ElevatedButton.styleFrom(backgroundColor: backgroundColor2),
                 onPressed: () {
                   register(context);
                 },
-                child: Text("Crear una Cuenta"))
+                child: Text("Crear una Cuenta", style: TextStyle(color: titleColor),))
           ],
         ),
       ),

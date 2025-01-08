@@ -64,8 +64,7 @@ class _RegisterState extends State<Register> {
       if (await provider(context, listen: false).register(usuario)) {
         inicioUsuario(context);
       }
-    } else {
-    }
+    } else {}
   }
 
   inicioUsuario(BuildContext context) {
@@ -120,10 +119,15 @@ class _RegisterState extends State<Register> {
                           etiqueta: "Correo Electrónico:",
                           validacion: validatorGmail),
                       ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor: backgroundColor),
                           onPressed: () {
                             crearCuenta(context);
                           },
-                          child: Text("Crear Cuenta"))
+                          child: Text(
+                            "Crear Cuenta",
+                            style: TextStyle(color: titleColor),
+                          ))
                     ],
                   ),
                 )),

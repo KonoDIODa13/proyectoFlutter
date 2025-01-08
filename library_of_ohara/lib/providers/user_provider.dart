@@ -1,5 +1,5 @@
 import 'dart:io';
-import 'package:bcrypt/bcrypt.dart';
+//import 'package:bcrypt/bcrypt.dart';
 import 'package:flutter/material.dart';
 import 'package:library_of_ohara/model/usuario.dart';
 import 'package:path/path.dart' as path;
@@ -31,7 +31,7 @@ class UserProvider extends ChangeNotifier {
 
   void createDB(Database db) async {
     await db.execute('''
-      CREATE TABLE IF NOT EXISTS Usuario (
+      CREATE TABLE IF NOT EXISTS usuario (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       nombre TEXT,
       gmail TEXT,
@@ -42,13 +42,12 @@ class UserProvider extends ChangeNotifier {
 
   Future<bool> login(String nombre, String contra) async {
     var db = await getDB();
-    var contrasenaCifrada = BCrypt.hashpw(contra, BCrypt.gensalt());
+    //var contrasenaCifrada = BCrypt.hashpw(contra, BCrypt.gensalt());
     bool encontrado = false;
     var query = await db.query("usuario");
     if (query.isNotEmpty) {
       var user = await db.query("usuario",
-          where: "nombre= ? and contrasena= ?",
-          whereArgs: [nombre, contrasenaCifrada]);
+          where: "nombre= ? and contrasena= ?", whereArgs: [nombre, contra]);
       if (user.isNotEmpty) {
         encontrado = true;
         setUsuario(Usuario.fromMap(user.first));
@@ -59,9 +58,9 @@ class UserProvider extends ChangeNotifier {
 
   Future<bool> register(Usuario usuarioRegistro) async {
     var db = await getDB();
-    var contrasenaCifrada =
-        BCrypt.hashpw(usuario.getContrasena(), BCrypt.gensalt());
-    usuario.setContrasena(contrasenaCifrada);
+    /*var contrasenaCifrada =
+        BCrypt.hashpw(usuarioRegistro.getContrasena(), BCrypt.gensalt());
+    usuarioRegistro.setContrasena(contrasenaCifrada);*/
     bool creado = false;
     var query = await db.query("usuario");
     if (query.isNotEmpty) {
@@ -84,8 +83,8 @@ class UserProvider extends ChangeNotifier {
     return creado;
   }
 
-  insertarUsuario(Usuario usuario) {
-    db.insert("usuario", usuario.toMap());
+  insertarUsuario(Usuario user) {
+    db.insert("usuario", user.toMap());
   }
 
   setUsuario(Usuario user) {

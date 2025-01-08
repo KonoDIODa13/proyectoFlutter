@@ -52,14 +52,13 @@ class _LoginState extends State<Login> {
     return null;
   }
 
-   login(BuildContext context) async {
+  login(BuildContext context) async {
     if (_formKey.currentState!.validate()) {
-
-      if (await provider(context, listen: false).login(nombreController.text, contrasenaController.text)) {
+      if (await provider(context, listen: false)
+          .login(nombreController.text, contrasenaController.text)) {
         inicioUsuario(context);
       }
-    } else {
-    }
+    } else {}
   }
 
   inicioUsuario(BuildContext context) {
@@ -75,12 +74,13 @@ class _LoginState extends State<Login> {
   }
 
   void register(BuildContext context) {
-    Navigator.push(context, MaterialPageRoute(builder: (context) => Register()));
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => Register()));
   }
 
   @override
   Widget build(BuildContext context) {
-        return Scaffold(
+    return Scaffold(
         backgroundColor: backgroundColor,
         body: Center(
             child: Column(
@@ -110,14 +110,21 @@ class _LoginState extends State<Login> {
                           validacion: validatorContrasena,
                           esOculto: true),
                       Input(
-                          controlador: contrasena2Controller,
-                          etiqueta: "Repetir Contraseña:",
-                          validacion: validatorContrasena),
+                        controlador: contrasena2Controller,
+                        etiqueta: "Repetir Contraseña:",
+                        validacion: validatorContrasena,
+                        esOculto: true,
+                      ),
                       ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor: backgroundColor),
                           onPressed: () {
                             login(context);
                           },
-                          child: Text("Iniciar Sesión"))
+                          child: Text(
+                            "Iniciar Sesión",
+                            style: TextStyle(color: titleColor),
+                          ))
                     ],
                   ),
                 )),
