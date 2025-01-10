@@ -57,8 +57,11 @@ class _LoginState extends State<Login> {
       if (await provider(context, listen: false)
           .login(nombreController.text, contrasenaController.text)) {
         inicioUsuario(context);
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: const Text("error al iniciar sesión.")));
       }
-    } else {}
+    }
   }
 
   inicioUsuario(BuildContext context) {
@@ -93,7 +96,7 @@ class _LoginState extends State<Login> {
             Container(
                 color: backgroundColor2,
                 width: View.of(context).physicalSize.width / 2, // curioso
-                height: View.of(context).physicalSize.height / 2,
+                height: View.of(context).physicalSize.height / 1.75,
                 margin: EdgeInsets.only(
                     top: View.of(context).physicalSize.height / 8),
                 child: Form(
@@ -115,16 +118,19 @@ class _LoginState extends State<Login> {
                         validacion: validatorContrasena,
                         esOculto: true,
                       ),
-                      ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                              backgroundColor: backgroundColor),
-                          onPressed: () {
-                            login(context);
-                          },
-                          child: Text(
-                            "Iniciar Sesión",
-                            style: TextStyle(color: titleColor),
-                          ))
+                      Padding(
+                        padding: const EdgeInsets.only(top: 15.00),
+                        child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                backgroundColor: backgroundColor),
+                            onPressed: () {
+                              login(context);
+                            },
+                            child: Text(
+                              "Iniciar Sesión",
+                              style: TextStyle(color: titleColor),
+                            )),
+                      )
                     ],
                   ),
                 )),

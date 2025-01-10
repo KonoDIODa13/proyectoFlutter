@@ -30,38 +30,49 @@ class _InitAppState extends State<InitApp> {
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
-        title: Text(
-          "LIBRARY OF OHARA",
-        ),
-        centerTitle: true,
-        titleTextStyle: TextStyle(
-            color: titleColor,
-            fontSize: 50,
-            fontStyle: FontStyle.italic,
-            fontFamily: titles),
         backgroundColor: backgroundColor,
+        centerTitle: true,
+        title: Text("Library Of Ohara",
+            style: TextStyle(
+                color: titleColor,
+                fontSize: 35,
+                fontFamily: titles,
+                fontStyle: FontStyle.italic)),
       ),
       body: Center(
-        child: Column(
-          children: [
-            ElevatedButton(
-                style:
-                    ElevatedButton.styleFrom(backgroundColor: backgroundColor2),
-                onPressed: () {
-                  login(context);
-                },
-                child: Text(
-                  "Iniciar Sesión",
-                  style: TextStyle(color: titleColor),
-                )),
-            ElevatedButton(
-                style:
-                    ElevatedButton.styleFrom(backgroundColor: backgroundColor2),
-                onPressed: () {
-                  register(context);
-                },
-                child: Text("Crear una Cuenta", style: TextStyle(color: titleColor),))
-          ],
+        child: Container(
+          margin:
+              EdgeInsets.only(top: View.of(context).physicalSize.height / 8),
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: backgroundColor2),
+                    onPressed: () {
+                      login(context);
+                    },
+                    child: Text(
+                      "Iniciar Sesión",
+                      style: TextStyle(color: titleColor),
+                    )),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: backgroundColor2),
+                    onPressed: () {
+                      register(context);
+                    },
+                    child: Text(
+                      "Crear una Cuenta",
+                      style: TextStyle(color: titleColor),
+                    )),
+              )
+            ],
+          ),
         ),
       ),
     );

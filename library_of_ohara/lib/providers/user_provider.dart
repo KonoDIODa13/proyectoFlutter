@@ -6,7 +6,7 @@ import 'package:path/path.dart' as path;
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
 class UserProvider extends ChangeNotifier {
-  late Usuario usuario;
+  late Usuario? usuario;
   late Database db;
 
   UserProvider() {
@@ -87,12 +87,17 @@ class UserProvider extends ChangeNotifier {
     db.insert("usuario", user.toMap());
   }
 
-  setUsuario(Usuario user) {
-    usuario = user;
+  setUsuario(Usuario? user) {
+    if (user == null) {
+      usuario = null;
+    } else {
+      usuario = user;
+    }
+    notifyListeners();
   }
 
   getUser() {
-    return usuario;
+    return usuario!;
   }
 
   setDB(Database database) {
@@ -101,5 +106,10 @@ class UserProvider extends ChangeNotifier {
 
   Future<Database> getDB() async {
     return db;
+  }
+
+  cerrarSesion() {
+    setUsuario(null);
+    notifyListeners();
   }
 }

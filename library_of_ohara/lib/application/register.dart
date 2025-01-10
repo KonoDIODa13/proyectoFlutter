@@ -34,10 +34,10 @@ class _RegisterState extends State<Register> {
 
   String? validatorContrasena(String? value) {
     if (value == null || value.isEmpty) {
-      return 'Por favor, ingresa tu contraseña';
+      return 'Por favor, ingresa tu contraseña.';
     }
     if (value.length < 6) {
-      return 'La contraseña debe tener al menos 6 caracteres';
+      return 'La contraseña debe tener al menos 6 caracteres.';
     }
     return null;
   }
@@ -60,11 +60,14 @@ class _RegisterState extends State<Register> {
           nombre: nombreController.text,
           gmail: gmailController.text,
           contrasena: contrasenaController.text);
-
       if (await provider(context, listen: false).register(usuario)) {
         inicioUsuario(context);
+      }else{
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: const Text("error al insertar dicho usuario."))
+        );
       }
-    } else {}
+    } 
   }
 
   inicioUsuario(BuildContext context) {
@@ -97,8 +100,8 @@ class _RegisterState extends State<Register> {
             ),
             Container(
                 color: backgroundColor2,
-                width: View.of(context).physicalSize.width / 2, // curioso
-                height: View.of(context).physicalSize.height / 2,
+                width: View.of(context).physicalSize.width/2, // curioso
+                height: View.of(context).physicalSize.height / 1.75,
                 margin: EdgeInsets.only(
                     top: View.of(context).physicalSize.height / 8),
                 child: Form(
@@ -118,16 +121,19 @@ class _RegisterState extends State<Register> {
                           controlador: gmailController,
                           etiqueta: "Correo Electrónico:",
                           validacion: validatorGmail),
-                      ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                              backgroundColor: backgroundColor),
-                          onPressed: () {
-                            crearCuenta(context);
-                          },
-                          child: Text(
-                            "Crear Cuenta",
-                            style: TextStyle(color: titleColor),
-                          ))
+                      Padding(
+                        padding: const EdgeInsets.only(top: 15.00),
+                        child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                backgroundColor: backgroundColor),
+                            onPressed: () {
+                              crearCuenta(context);
+                            },
+                            child: Text(
+                              "Crear Cuenta",
+                              style: TextStyle(color: titleColor),
+                            )),
+                      )
                     ],
                   ),
                 )),
