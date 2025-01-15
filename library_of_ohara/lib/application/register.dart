@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:library_of_ohara/application/init_app.dart';
 import 'package:library_of_ohara/application/login.dart';
 import 'package:library_of_ohara/application/user_page.dart';
 import 'package:library_of_ohara/components/input.dart';
@@ -79,7 +80,8 @@ class _RegisterState extends State<Register> {
   }
 
   void volver(BuildContext context) {
-    Navigator.pop(context);
+    //Navigator.pop(context); esto no me vale en el mismo momento que le pulsas al enlace de abajo
+    Navigator.push(context, MaterialPageRoute(builder: (context) => InitApp()));
   }
 
   void login(BuildContext context) {

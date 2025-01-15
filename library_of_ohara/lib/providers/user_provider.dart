@@ -1,57 +1,34 @@
-import 'dart:io';
 //import 'package:bcrypt/bcrypt.dart';
 import 'package:flutter/material.dart';
+import 'package:library_of_ohara/dao/usuario_dao.dart';
 import 'package:library_of_ohara/model/usuario.dart';
-import 'package:path/path.dart' as path;
+import 'package:library_of_ohara/db_creater/db_creater.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
 class UserProvider extends ChangeNotifier {
-  late Usuario? usuario;
+  Usuario usuario = Usuario(nombre: "", gmail: "", contrasena: "");
   late Database db;
-
+  late UsuarioDao usuarioDaw;
   UserProvider() {
+    usuarioDaw = UsuarioDao();
     inicializarBD();
   }
 
   void inicializarBD() async {
-    sqfliteFfiInit();
-    final currentDir = Directory.current;
-
-    //Create path for database
-    String dbPath =
-        path.join(currentDir.path, "databases", "library_of_ohara.db");
-    var databaseFactory = databaseFactoryFfi;
-    db = await databaseFactory.openDatabase(
-      dbPath,
-    );
-    createDB(db);
+    DbCreater dbCreater = DbCreater();
+    db = await dbCreater.createDB();
     setDB(db);
+    await dbCreater.crearUsuarios();
     notifyListeners();
-  }
-
-  void createDB(Database db) async {
-    await db.execute('''
-      CREATE TABLE IF NOT EXISTS usuario (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      nombre TEXT,
-      gmail TEXT,
-      contrasena TEXT
-  )
-  ''');
   }
 
   Future<bool> login(String nombre, String contra) async {
     var db = await getDB();
-    //var contrasenaCifrada = BCrypt.hashpw(contra, BCrypt.gensalt());
     bool encontrado = false;
-    var query = await db.query("usuario");
-    if (query.isNotEmpty) {
-      var user = await db.query("usuario",
-          where: "nombre= ? and contrasena= ?", whereArgs: [nombre, contra]);
-      if (user.isNotEmpty) {
-        encontrado = true;
-        setUsuario(Usuario.fromMap(user.first));
-      }
+    Usuario? user = await usuarioDaw.login(nombre, contra, db);
+    if (user != null) {
+      encontrado = true;
+      setUsuario(user);
     }
     return encontrado;
   }
@@ -62,42 +39,20 @@ class UserProvider extends ChangeNotifier {
         BCrypt.hashpw(usuarioRegistro.getContrasena(), BCrypt.gensalt());
     usuarioRegistro.setContrasena(contrasenaCifrada);*/
     bool creado = false;
-    var query = await db.query("usuario");
-    if (query.isNotEmpty) {
-      var user = await db.query("usuario",
-          where: "nombre= ? and contrasena= ?",
-          whereArgs: [
-            usuarioRegistro.getNombre(),
-            usuarioRegistro.getContrasena()
-          ]);
-      if (user.isEmpty) {
-        insertarUsuario(usuarioRegistro);
-        setUsuario(usuarioRegistro);
-        creado = true;
-      }
-    } else {
-      insertarUsuario(usuarioRegistro);
-      setUsuario(usuarioRegistro);
+    Usuario? user = await usuarioDaw.register(usuarioRegistro, db);
+    if (user != null) {
+      setUsuario(user);
       creado = true;
     }
     return creado;
   }
 
-  insertarUsuario(Usuario user) {
-    db.insert("usuario", user.toMap());
-  }
-
-  setUsuario(Usuario? user) {
-    if (user == null) {
-      usuario = null;
-    } else {
-      usuario = user;
-    }
-    notifyListeners();
+  setUsuario(Usuario user) {
+    usuario = user;
   }
 
   getUser() {
-    return usuario!;
+    return usuario;
   }
 
   setDB(Database database) {
@@ -109,7 +64,8 @@ class UserProvider extends ChangeNotifier {
   }
 
   cerrarSesion() {
-    setUsuario(null);
+    var user = Usuario(nombre: "", gmail: "", contrasena: "");
+    setUsuario(user);
     notifyListeners();
   }
 }

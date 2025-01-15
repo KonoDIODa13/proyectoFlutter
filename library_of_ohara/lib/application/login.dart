@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:library_of_ohara/application/init_app.dart';
 import 'package:library_of_ohara/application/register.dart';
 import 'package:library_of_ohara/application/user_page.dart';
 import 'package:library_of_ohara/components/input.dart';
@@ -73,7 +74,8 @@ class _LoginState extends State<Login> {
   }
 
   void volver(BuildContext context) {
-    Navigator.pop(context);
+    //Navigator.pop(context); esto no me vale en el mismo momento que le pulsas al enlace de abajo
+    Navigator.push(context, MaterialPageRoute(builder: (context) => InitApp()));
   }
 
   void register(BuildContext context) {
@@ -115,7 +117,7 @@ class _LoginState extends State<Login> {
                       Input(
                         controlador: contrasena2Controller,
                         etiqueta: "Repetir Contraseña:",
-                        validacion: validatorContrasena,
+                        validacion: validatorContrasena2,
                         esOculto: true,
                       ),
                       Padding(

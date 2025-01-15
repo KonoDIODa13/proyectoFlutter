@@ -27,7 +27,9 @@ class _InitAppState extends State<InitApp> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+        home: Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
         backgroundColor: backgroundColor,
@@ -75,6 +77,6 @@ class _InitAppState extends State<InitApp> {
           ),
         ),
       ),
-    );
+    ));
   }
 }
