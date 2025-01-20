@@ -2,7 +2,7 @@ class Libro {
   String _titulo;
   String _autor;
   String _genero;
- late String _isbn;
+  String _isbn;
   String _descripcion;
   DateTime _fechaPublicacion;
 
@@ -25,7 +25,7 @@ class Libro {
       titulo: map['titulo'] as String,
       autor: map['autor'] as String,
       genero: map['genero'] as String,
-      isbn: map['isbn'] as String,
+      isbn: map['ISBN'] as String,
       descripcion: map['descripcion'] as String,
       fechaPublicacion: DateTime.parse(map['fechaPublicacion'] as String),
     );

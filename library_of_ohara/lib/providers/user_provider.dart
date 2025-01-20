@@ -1,6 +1,7 @@
 //import 'package:bcrypt/bcrypt.dart';
 import 'package:flutter/material.dart';
 import 'package:library_of_ohara/dao/usuario_dao.dart';
+import 'package:library_of_ohara/model/libro.dart';
 import 'package:library_of_ohara/model/usuario.dart';
 import 'package:library_of_ohara/db_creater/db_creater.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
@@ -9,6 +10,7 @@ class UserProvider extends ChangeNotifier {
   Usuario usuario = Usuario(nombre: "", gmail: "", contrasena: "");
   late Database db;
   late UsuarioDao usuarioDaw;
+
   UserProvider() {
     usuarioDaw = UsuarioDao();
     inicializarBD();
@@ -68,5 +70,17 @@ class UserProvider extends ChangeNotifier {
     var user = Usuario(nombre: "", gmail: "", contrasena: "");
     setUsuario(user);
     notifyListeners();
+  }
+
+  Future<List<Libro>> buscarLibros() async {
+    List<Libro> libros=[];
+    var db = await getDB();
+
+    var query = await db.query("libro");
+    for (var queryLibro in query) {
+      Libro libro = Libro.fromMap(queryLibro);
+      libros.add(libro);
+    }
+    return libros;
   }
 }

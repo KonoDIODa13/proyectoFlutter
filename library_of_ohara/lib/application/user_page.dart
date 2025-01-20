@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:library_of_ohara/application/biblioteca.dart';
 import 'package:library_of_ohara/components/drawer.dart';
 import 'package:library_of_ohara/model/usuario.dart';
 import 'package:library_of_ohara/providers/user_provider.dart';
@@ -17,6 +18,31 @@ class UserPage extends StatefulWidget {
 
 class _UserPageState extends State<UserPage> {
   final provider = Provider.of<UserProvider>;
+  int indice = 1;
+  Widget body=Center(child: Text("aun en desarrollo"));
+  changeWindow(int index) {
+    switch (index) {
+      case 0:
+        setState(() {
+          indice = index;
+          body = Biblioteca(usuario: widget.usuario);
+        });
+        break;
+      case 1:
+        setState(() {
+          indice = index;
+          body = Center(child: Text(widget.usuario.getNombre()));
+        });
+        break;
+      case 2:
+ setState(() {
+          indice = index;
+          body = Center(child: Text("Aun en desarrollo"));
+        });
+      break;
+      default:
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -67,11 +93,12 @@ class _UserPageState extends State<UserPage> {
               label: "Tus libros"),
         ],
         backgroundColor: backgroundColor,
-        currentIndex: 1,
+        currentIndex: indice,
         fixedColor: titleColor,
         unselectedItemColor: titleColor,
+        onTap: changeWindow,
       ),
-      body: Center(child: Text(widget.usuario.getNombre())),
+      body: body,
     );
   }
 }
