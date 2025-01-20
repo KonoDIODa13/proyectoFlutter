@@ -1,10 +1,3 @@
-/*
-id INTEGER PRIMARY KEY,
-      nombre TEXT,
-      gmail TEXT,
-      contrasena TEXT,
-      */
-
 class Usuario {
   String _nombre;
   String _gmail;

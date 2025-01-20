@@ -18,7 +18,8 @@ class UserProvider extends ChangeNotifier {
     DbCreater dbCreater = DbCreater();
     db = await dbCreater.createDB();
     setDB(db);
-    await dbCreater.crearUsuarios();
+    await dbCreater.crearDBUsuarios();
+    //await dbCreater.crearDBLibros();
     notifyListeners();
   }
 
