@@ -6,7 +6,9 @@ import 'package:library_of_ohara/themes/colors.dart';
 import 'package:provider/provider.dart';
 
 class Biblioteca extends StatefulWidget {
+  final provider = Provider.of<UserProvider>;
   Usuario usuario;
+
   Biblioteca({super.key, required this.usuario});
 
   @override
@@ -15,16 +17,11 @@ class Biblioteca extends StatefulWidget {
 
 class _BibliotecaState extends State<Biblioteca> {
   final provider = Provider.of<UserProvider>;
-  List<Libro> libros= [];
-
-  getLibros(BuildContext context) async {
-    libros = await provider(context).buscarLibros();
-    print(libros.length);
-  }
+  List<Libro> libros = [];
 
   @override
   Widget build(BuildContext context) {
-    getLibros(context);
+    libros = provider(context).listaLibros;
     return Scaffold(
         backgroundColor: backgroundColor,
         body: ListView.builder(

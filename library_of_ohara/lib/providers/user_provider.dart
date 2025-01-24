@@ -10,6 +10,7 @@ class UserProvider extends ChangeNotifier {
   Usuario usuario = Usuario(nombre: "", gmail: "", contrasena: "");
   late Database db;
   late UsuarioDao usuarioDaw;
+  List<Libro> listaLibros = [];
 
   UserProvider() {
     usuarioDaw = UsuarioDao();
@@ -22,6 +23,7 @@ class UserProvider extends ChangeNotifier {
     setDB(db);
     await dbCreater.crearDBUsuarios();
     //await dbCreater.crearDBLibros();
+    await buscarLibros();
     notifyListeners();
   }
 
@@ -72,15 +74,12 @@ class UserProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<List<Libro>> buscarLibros() async {
-    List<Libro> libros=[];
+  Future<void> buscarLibros() async {
     var db = await getDB();
-
     var query = await db.query("libro");
     for (var queryLibro in query) {
       Libro libro = Libro.fromMap(queryLibro);
-      libros.add(libro);
+      listaLibros.add(libro);
     }
-    return libros;
   }
 }
