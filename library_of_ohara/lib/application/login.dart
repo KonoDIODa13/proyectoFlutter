@@ -85,26 +85,43 @@ class _LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
+    final double screenWidth = MediaQuery.of(context).size.width;
+    final double screenHeight = MediaQuery.of(context).size.height;
+
+    final double maxheight = 400;
+    double containerWidth = screenWidth * 0.5;
+    double containerHeight = screenHeight * 0.9;
+
+    if (containerHeight >= maxheight) {
+      containerHeight = maxheight;
+    }
     return Scaffold(
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          backgroundColor: backgroundColor2,
+          centerTitle: true,
+          title: Text(
+            "Login",
+            style:
+                TextStyle(color: titleColor, fontFamily: titles, fontSize: 45),
+          ),
+        ),
         backgroundColor: backgroundColor,
         body: Center(
             child: Column(
           children: [
-            Text(
-              "Login",
-              style: TextStyle(
-                  color: titleColor, fontFamily: titles, fontSize: 45),
-            ),
             Container(
                 color: backgroundColor2,
-                width: View.of(context).physicalSize.width / 2, // curioso
-                height: View.of(context).physicalSize.height / 1.75,
-                margin: EdgeInsets.only(
-                    top: View.of(context).physicalSize.height / 8),
+                width: containerWidth, // curioso
+                height: containerHeight,
+                margin: EdgeInsets.only(top: screenHeight * 0.1),
                 child: Form(
                   key: _formKey,
                   child: Column(
                     children: [
+                      /*Text("Inicio de Sesión",
+                          style: TextStyle(color: titleColor, fontSize: 30),
+                          textAlign: TextAlign.center),*/
                       Input(
                           controlador: nombreController,
                           etiqueta: "Nombre:",

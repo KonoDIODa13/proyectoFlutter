@@ -27,12 +27,16 @@ class _InitAppState extends State<InitApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-        home: Scaffold(
+    final double screenWidth = MediaQuery.of(context).size.width;
+    final double screenHeight = MediaQuery.of(context).size.height;
+
+    double containerWidth= screenWidth*0.4;
+    double containerHeight= screenHeight*0.4;
+    return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
-        backgroundColor: backgroundColor,
+        automaticallyImplyLeading: false,
+        backgroundColor: backgroundColor2,
         centerTitle: true,
         title: Text("Library Of Ohara",
             style: TextStyle(
@@ -43,6 +47,8 @@ class _InitAppState extends State<InitApp> {
       ),
       body: Center(
         child: Container(
+          width: containerWidth,
+          height: containerHeight,
           margin:
               EdgeInsets.only(top: View.of(context).physicalSize.height / 8),
           child: Column(
@@ -77,6 +83,6 @@ class _InitAppState extends State<InitApp> {
           ),
         ),
       ),
-    ));
+    );
   }
 }

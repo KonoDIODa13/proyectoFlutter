@@ -63,12 +63,11 @@ class _RegisterState extends State<Register> {
           contrasena: contrasenaController.text);
       if (await provider(context, listen: false).register(usuario)) {
         inicioUsuario(context);
-      }else{
+      } else {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: const Text("error al insertar dicho usuario."))
-        );
+            SnackBar(content: const Text("error al insertar dicho usuario.")));
       }
-    } 
+    }
   }
 
   inicioUsuario(BuildContext context) {
@@ -91,6 +90,16 @@ class _RegisterState extends State<Register> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          backgroundColor: backgroundColor2,
+          centerTitle: true,
+          title: Text(
+            "Register",
+            style:
+                TextStyle(color: titleColor, fontFamily: titles, fontSize: 45),
+          ),
+        ),
         backgroundColor: backgroundColor,
         body: Center(
             child: Column(
@@ -102,7 +111,7 @@ class _RegisterState extends State<Register> {
             ),
             Container(
                 color: backgroundColor2,
-                width: View.of(context).physicalSize.width/2, // curioso
+                width: View.of(context).physicalSize.width / 2, // curioso
                 height: View.of(context).physicalSize.height / 1.75,
                 margin: EdgeInsets.only(
                     top: View.of(context).physicalSize.height / 8),

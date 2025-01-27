@@ -16,7 +16,7 @@ class Libro {
   })  : _titulo = titulo,
         _autor = autor,
         _genero = genero,
-        _isbn= isbn,
+        _isbn = isbn,
         _descripcion = descripcion,
         _fechaPublicacion = fechaPublicacion;
 
@@ -105,5 +105,14 @@ class Libro {
 
   setFechaPublicacion(DateTime fechaPublicacion) {
     _fechaPublicacion = fechaPublicacion;
+  }
+
+  getPortada() {
+    String portada = "";
+    for (var palabra in getTitulo().split("(")[1].split(" ")) {
+      portada += palabra;
+    }
+    portada = portada.replaceFirst(")", "");
+    return portada; // sera la ruta
   }
 }

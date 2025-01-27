@@ -50,7 +50,7 @@ class _UserPageState extends State<UserPage> {
       drawer: Drawwer(),
       appBar: AppBar(
         centerTitle: true,
-        backgroundColor: backgroundColor,
+        backgroundColor: backgroundColor2,
         title: Text(
           widget.usuario.getNombre(),
           style: TextStyle(color: titleColor, fontSize: 40, fontFamily: titles),
@@ -58,8 +58,9 @@ class _UserPageState extends State<UserPage> {
         leading: Builder(builder: (context) {
           return GestureDetector(
             child: CircleAvatar(
-              backgroundImage: AssetImage("assets/images/default_user.jpg"),
-              child: Text("Tú", textAlign: TextAlign.center),
+              
+              backgroundImage: AssetImage("assets/images/vergil_meme.jpg"),
+
             ),
             onTap: () {
               Scaffold.of(context).openDrawer();
@@ -92,7 +93,7 @@ class _UserPageState extends State<UserPage> {
               backgroundColor: backgroundColor,
               label: "Tus libros"),
         ],
-        backgroundColor: backgroundColor,
+        backgroundColor: backgroundColor2,
         currentIndex: indice,
         fixedColor: titleColor,
         unselectedItemColor: titleColor,
