@@ -8,9 +8,9 @@ import 'package:provider/provider.dart';
 
 class Biblioteca extends StatefulWidget {
   final provider = Provider.of<UserProvider>;
-  Usuario usuario;
+  final Usuario usuario;
 
-  Biblioteca({super.key, required this.usuario});
+  const Biblioteca({super.key, required this.usuario});
 
   @override
   State<Biblioteca> createState() => _BibliotecaState();
