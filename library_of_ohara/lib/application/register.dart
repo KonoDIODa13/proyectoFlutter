@@ -104,11 +104,6 @@ class _RegisterState extends State<Register> {
         body: Center(
             child: Column(
           children: [
-            Text(
-              "Register",
-              style: TextStyle(
-                  color: titleColor, fontFamily: titles, fontSize: 45),
-            ),
             Container(
                 color: backgroundColor2,
                 width: View.of(context).physicalSize.width / 2, // curioso

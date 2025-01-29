@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:library_of_ohara/model/libro.dart';
+import 'package:library_of_ohara/model/usuario.dart';
 import 'package:path/path.dart' as path;
 
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
@@ -35,9 +36,16 @@ class DbCreater {
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       nombre TEXT,
       gmail TEXT,
-      contrasena TEXT
+      contrasena TEXT,
+      imagen TEXT
   )
   ''');
+  }
+
+  Future<void> modificarImg(Usuario usuario, String rutaImg) async {
+    db = await getDB();
+    await db.update("usuario", {"imagen": rutaImg},
+        where: "nombre= ? ", whereArgs: [usuario.getNombre()]);
   }
 
   Future<void> crearDBLibros() async {
@@ -80,8 +88,8 @@ class DbCreater {
       print("error al insertar el libro ${libro1.getTitulo()}");
     }*/
 
-    /* mistborn II
-    Libro libro5 = Libro(
+    // mistborn II
+    /*Libro libro2 = Libro(
         titulo: "El Pozo De La Ascensión (Mistborn II)",
         autor: "Brandon Sanderson",
         genero: "Fantasia",
@@ -90,15 +98,15 @@ class DbCreater {
         " Durante mil años el Lord Legislador reina con un poder absoluto gracias al terror, a sus poderes y a su inmortalidad. Pero vencer y matar al Lord Legislador fue la parte sencilla."
         " El verdadero desafío será sobrevivir a las consecuencias de su caída.",
         fechaPublicacion: DateTime.parse("2007-08-21"));
-    libro5.setISBN(generarISBN(libro5));
-    if (await insertarLibro(libro5)) {
-      print("libro ${libro5.getTitulo()} insertado con exito");
+    libro2.setISBN(generarISBN(libro2));
+    if (await insertarLibro(libro2)) {
+      print("libro ${libro2.getTitulo()} insertado con exito");
     } else {
-      print("error al insertar el libro ${libro5.getTitulo()}");
+      print("error al insertar el libro ${libro2.getTitulo()}");
     }*/
 
     // mistborn III
-    /*Libro libro6 = Libro(
+    /*Libro libro3 = Libro(
         titulo: "El Héroe De Las Eras (Mistborn III)",
         autor: "Brandon Sanderson",
         genero: "Fantasia",
@@ -111,12 +119,13 @@ class DbCreater {
             " las tenebrosas acciones del Lord Legislador y la naturaleza del Pozo de la Ascensión. Vin y el Rey Elend buscan en los últimos escondites de recursos del Lord Legislador"
             " y descubren el peligro que acecha a la humanidad. ¿Conseguirán detenerlo a tiempo?",
         fechaPublicacion: DateTime.parse("2008-10-14"));
-    libro6.setISBN(generarISBN(libro6));
-    if (await insertarLibro(libro6)) {
-      print("libro ${libro6.getTitulo()} insertado con exito");
+    libro3.setISBN(generarISBN(libro3));
+    if (await insertarLibro(libro3)) {
+      print("libro ${libro3.getTitulo()} insertado con exito");
     } else {
-      print("error al insertar el libro ${libro6.getTitulo()}");
+      print("error al insertar el libro ${libro3.getTitulo()}");
     }*/
+
     // archivo I
     /*Libro libro4 = Libro(
         titulo: "El Camino De Los Reyes (The Stormlight Archive I)",
@@ -154,9 +163,9 @@ class DbCreater {
       print("libro ${libro5.getTitulo()} insertado con exito");
     } else {
       print("error al insertar el libro ${libro5.getTitulo()}");
-    }*/
+    }
     // archivo III
-    /*Libro libro6 = Libro(
+    Libro libro6 = Libro(
         titulo: "Juramentada (The Stormlight Archive III)",
         autor: "Brandon Sanderson",
         genero: "Fantasia",

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:library_of_ohara/application/init_app.dart';
+import 'package:library_of_ohara/components/input.dart';
 import 'package:library_of_ohara/providers/user_provider.dart';
 import 'package:library_of_ohara/themes/colors.dart';
 import 'package:provider/provider.dart';
@@ -19,6 +20,38 @@ class _DrawwerState extends State<Drawwer> {
     Navigator.push(context, MaterialPageRoute(builder: (context) => InitApp()));
   }
 
+  cambiarImagen(){
+    var controlador= TextEditingController();
+    var etiqueta= "Cambiar imagen:";
+    String? validar(String? value){
+       if (value == null || value.isEmpty) {
+      return 'Por favor, ingresa la url de la imagen.';
+    }
+
+      return null;
+    }
+
+    
+    
+    showDialog(context: context, builder: (context) {
+      return Container(
+        child: Form( 
+         
+        child :Column( children: [  
+         
+        Input(controlador: controlador, etiqueta: etiqueta, validacion: validar),
+        ElevatedButton(onPressed: (){
+          
+        }, child: Text("modificar"))
+        ]
+        )
+        )
+      );
+      
+    },);
+
+  }
+
   modificarUsuario() {}
 
   @override
@@ -29,7 +62,7 @@ class _DrawwerState extends State<Drawwer> {
         padding: EdgeInsets.only(left: 50),
         children: [
           GestureDetector(
-           // onTap: modificarUsuario(),
+            onTap: modificarUsuario(),
             child: Row(children: [
               Icon(
                 Icons.manage_accounts,
@@ -43,8 +76,8 @@ class _DrawwerState extends State<Drawwer> {
             ]),
           ),
           GestureDetector(
-           // onLongPress: cerrarSesion(context),
-             child: Row(children: [
+            //onTap: cerrarSesion(context),
+            child: Row(children: [
               Icon(
                 Icons.logout,
                 color: titleColor,
@@ -55,7 +88,8 @@ class _DrawwerState extends State<Drawwer> {
                 style: TextStyle(color: titleColor),
               )
             ]),
-          )
+          ),
+          ElevatedButton(onPressed: cambiarImagen, child: Text("cambiar imagen")),
           /*ElevatedButton(
               style: ElevatedButton.styleFrom(backgroundColor: backgroundColor),
               onPressed: () {

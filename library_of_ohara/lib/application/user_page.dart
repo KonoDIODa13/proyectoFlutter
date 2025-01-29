@@ -19,7 +19,7 @@ class UserPage extends StatefulWidget {
 class _UserPageState extends State<UserPage> {
   final provider = Provider.of<UserProvider>;
   int indice = 1;
-  Widget body=Center(child: Text("aun en desarrollo"));
+  Widget body = Center(child: Text("aun en desarrollo"));
   changeWindow(int index) {
     switch (index) {
       case 0:
@@ -35,11 +35,11 @@ class _UserPageState extends State<UserPage> {
         });
         break;
       case 2:
- setState(() {
+        setState(() {
           indice = index;
           body = Center(child: Text("Aun en desarrollo"));
         });
-      break;
+        break;
       default:
     }
   }
@@ -58,9 +58,11 @@ class _UserPageState extends State<UserPage> {
         leading: Builder(builder: (context) {
           return GestureDetector(
             child: CircleAvatar(
-              
-              backgroundImage: AssetImage("assets/images/vergil_meme.jpg"),
-
+              backgroundImage: NetworkImage(widget.usuario.getImagen
+                      .toString()
+                      .isEmpty
+                  ? "https://preview.redd.it/h5gnz1ji36o61.png?width=225&format=png&auto=webp&s=84379f8d3bbe593a2e863c438cd03e84c8a474fa"
+                  : widget.usuario.getImagen()),
             ),
             onTap: () {
               Scaffold.of(context).openDrawer();
