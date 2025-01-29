@@ -1,28 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:library_of_ohara/components/book_card.dart';
-import 'package:library_of_ohara/model/libro.dart';
-import 'package:library_of_ohara/model/usuario.dart';
-import 'package:library_of_ohara/providers/user_provider.dart';
+import 'package:library_of_ohara/application/components/book_card.dart';
+import 'package:library_of_ohara/application/model/libro.dart';
+import 'package:library_of_ohara/application/model/usuario.dart';
+import 'package:library_of_ohara/application/providers/app_provider.dart';
 import 'package:library_of_ohara/themes/colors.dart';
 import 'package:provider/provider.dart';
 
-class Biblioteca extends StatefulWidget {
-  final provider = Provider.of<UserProvider>;
+class Biblioteca extends StatelessWidget {
+  final provider = Provider.of<AppProvider>;
   final Usuario usuario;
+  final List<Libro> libros;
 
-  const Biblioteca({super.key, required this.usuario});
-
-  @override
-  State<Biblioteca> createState() => _BibliotecaState();
-}
-
-class _BibliotecaState extends State<Biblioteca> {
-  final provider = Provider.of<UserProvider>;
-  List<Libro> libros = [];
-
+  const Biblioteca({super.key, required this.usuario, required this.libros});
+  
   @override
   Widget build(BuildContext context) {
-    libros = provider(context).listaLibros;
     final double screenWidth = MediaQuery.of(context).size.width;
     // Calcular dinámicamente el número de columnas
     int crossAxisCount = 2; // Valor por defecto

@@ -1,30 +1,28 @@
 import 'package:flutter/material.dart';
-import 'package:library_of_ohara/application/init_app.dart';
-import 'package:library_of_ohara/application/login.dart';
-import 'package:library_of_ohara/application/user_page.dart';
-import 'package:library_of_ohara/components/input.dart';
-import 'package:library_of_ohara/model/usuario.dart';
-import 'package:library_of_ohara/providers/user_provider.dart';
+import 'package:library_of_ohara/application/model/usuario.dart';
+import 'package:library_of_ohara/application/views/init_app.dart';
+import 'package:library_of_ohara/application/views/register.dart';
+import 'package:library_of_ohara/application/views/user_page.dart';
+import 'package:library_of_ohara/application/components/input.dart';
+import 'package:library_of_ohara/application/providers/app_provider.dart';
 import 'package:library_of_ohara/themes/colors.dart';
 import 'package:library_of_ohara/themes/fonts.dart';
 import 'package:provider/provider.dart';
 
-class Register extends StatefulWidget {
-  const Register({super.key});
+class Login extends StatefulWidget {
+  const Login({super.key});
 
   @override
-  State<Register> createState() => _RegisterState();
+  State<Login> createState() => _LoginState();
 }
 
-class _RegisterState extends State<Register> {
+class _LoginState extends State<Login> {
   final _formKey = GlobalKey<FormState>();
-  final provider = Provider.of<UserProvider>;
+  final provider = Provider.of<AppProvider>;
 
   TextEditingController nombreController = TextEditingController();
-
-  TextEditingController gmailController = TextEditingController();
-
   TextEditingController contrasenaController = TextEditingController();
+  TextEditingController contrasena2Controller = TextEditingController();
 
   String? validatorNombre(String? value) {
     if (value == null || value.isEmpty) {
@@ -35,47 +33,45 @@ class _RegisterState extends State<Register> {
 
   String? validatorContrasena(String? value) {
     if (value == null || value.isEmpty) {
-      return 'Por favor, ingresa tu contraseña.';
+      return 'Por favor, ingresa tu contraseña';
     }
     if (value.length < 6) {
-      return 'La contraseña debe tener al menos 6 caracteres.';
+      return 'La contraseña debe tener al menos 6 caracteres';
     }
     return null;
   }
 
-  String? validatorGmail(String? value) {
+  String? validatorContrasena2(String? value) {
     if (value == null || value.isEmpty) {
-      return 'Por favor, ingresa tu correo electrónico.';
+      return 'Por favor, ingresa tu contraseña';
     }
-
-    if (!RegExp(r'^[a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$')
-        .hasMatch(value)) {
-      return 'Por favor, ingresa un correo electrónico válido.';
+    if (value.length < 6) {
+      return 'La contraseña debe tener al menos 6 caracteres';
+    }
+    if (contrasenaController.text != contrasena2Controller.text) {
+      return 'La contraseñas no coinciden';
     }
     return null;
   }
 
-  crearCuenta(BuildContext context) async {
+  login(BuildContext context) async {
     if (_formKey.currentState!.validate()) {
-      var usuario = Usuario(
-          nombre: nombreController.text,
-          gmail: gmailController.text,
-          contrasena: contrasenaController.text);
-      if (await provider(context, listen: false).register(usuario)) {
-        inicioUsuario(context);
+      var nombre = nombreController.text;
+      var contra = contrasenaController.text;
+
+      var user = await provider(context, listen: false).login(nombre, contra);
+      if (user != null) {
+        inicioUsuario(context, user);
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: const Text("error al insertar dicho usuario.")));
+            SnackBar(content: const Text("error al iniciar sesión.")));
       }
     }
   }
 
-  inicioUsuario(BuildContext context) {
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) =>
-                UserPage(usuario: provider(context, listen: false).getUser())));
+  inicioUsuario(BuildContext context, Usuario user) {
+    Navigator.push(context,
+        MaterialPageRoute(builder: (context) => UserPage(usuario: user)));
   }
 
   void volver(BuildContext context) {
@@ -83,19 +79,30 @@ class _RegisterState extends State<Register> {
     Navigator.push(context, MaterialPageRoute(builder: (context) => InitApp()));
   }
 
-  void login(BuildContext context) {
-    Navigator.push(context, MaterialPageRoute(builder: (context) => Login()));
+  void register(BuildContext context) {
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => Register()));
   }
 
   @override
   Widget build(BuildContext context) {
+    final double screenWidth = MediaQuery.of(context).size.width;
+    final double screenHeight = MediaQuery.of(context).size.height;
+
+    final double maxheight = 400;
+    double containerWidth = screenWidth * 0.5;
+    double containerHeight = screenHeight * 0.9;
+
+    if (containerHeight >= maxheight) {
+      containerHeight = maxheight;
+    }
     return Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,
           backgroundColor: backgroundColor2,
           centerTitle: true,
           title: Text(
-            "Register",
+            "Login",
             style:
                 TextStyle(color: titleColor, fontFamily: titles, fontSize: 45),
           ),
@@ -106,14 +113,16 @@ class _RegisterState extends State<Register> {
           children: [
             Container(
                 color: backgroundColor2,
-                width: View.of(context).physicalSize.width / 2, // curioso
-                height: View.of(context).physicalSize.height / 1.75,
-                margin: EdgeInsets.only(
-                    top: View.of(context).physicalSize.height / 8),
+                width: containerWidth, // curioso
+                height: containerHeight,
+                margin: EdgeInsets.only(top: screenHeight * 0.1),
                 child: Form(
                   key: _formKey,
                   child: Column(
                     children: [
+                      /*Text("Inicio de Sesión",
+                          style: TextStyle(color: titleColor, fontSize: 30),
+                          textAlign: TextAlign.center),*/
                       Input(
                           controlador: nombreController,
                           etiqueta: "Nombre:",
@@ -124,19 +133,21 @@ class _RegisterState extends State<Register> {
                           validacion: validatorContrasena,
                           esOculto: true),
                       Input(
-                          controlador: gmailController,
-                          etiqueta: "Correo Electrónico:",
-                          validacion: validatorGmail),
+                        controlador: contrasena2Controller,
+                        etiqueta: "Repetir Contraseña:",
+                        validacion: validatorContrasena2,
+                        esOculto: true,
+                      ),
                       Padding(
                         padding: const EdgeInsets.only(top: 15.00),
                         child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
                                 backgroundColor: backgroundColor),
                             onPressed: () {
-                              crearCuenta(context);
+                              login(context);
                             },
                             child: Text(
-                              "Crear Cuenta",
+                              "Iniciar Sesión",
                               style: TextStyle(color: titleColor),
                             )),
                       )
@@ -147,10 +158,10 @@ class _RegisterState extends State<Register> {
                 cursor: SystemMouseCursors.click,
                 child: GestureDetector(
                   onTap: () {
-                    login(context);
+                    register(context);
                   },
                   child: Text(
-                    "Login",
+                    "Registrarse",
                     style: TextStyle(
                         color: nonameColor,
                         decoration: TextDecoration.underline,

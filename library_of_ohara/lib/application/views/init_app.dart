@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:library_of_ohara/application/register.dart';
+import 'package:library_of_ohara/application/views/register.dart';
 import 'package:library_of_ohara/themes/colors.dart';
 import 'package:library_of_ohara/themes/fonts.dart';
-import 'package:library_of_ohara/application/login.dart';
+import 'package:library_of_ohara/application/views/login.dart';
 
 class InitApp extends StatefulWidget {
   const InitApp({super.key});

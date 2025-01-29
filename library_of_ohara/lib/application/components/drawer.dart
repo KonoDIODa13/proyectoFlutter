@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:library_of_ohara/application/init_app.dart';
-import 'package:library_of_ohara/components/input.dart';
-import 'package:library_of_ohara/providers/user_provider.dart';
+import 'package:library_of_ohara/application/views/init_app.dart';
+import 'package:library_of_ohara/application/components/input.dart';
+import 'package:library_of_ohara/application/providers/app_provider.dart';
 import 'package:library_of_ohara/themes/colors.dart';
 import 'package:provider/provider.dart';
 
@@ -13,10 +13,10 @@ class Drawwer extends StatefulWidget {
 }
 
 class _DrawwerState extends State<Drawwer> {
-  final provider = Provider.of<UserProvider>;
+  final provider = Provider.of<AppProvider>;
 
   cerrarSesion(BuildContext context) async {
-    await Provider.of<UserProvider>(context).cerrarSesion();
+    await Provider.of<AppProvider>(context).cerrarSesion();
     Navigator.push(context, MaterialPageRoute(builder: (context) => InitApp()));
   }
 
