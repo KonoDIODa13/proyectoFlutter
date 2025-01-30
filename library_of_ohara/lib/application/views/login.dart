@@ -61,6 +61,7 @@ class _LoginState extends State<Login> {
 
       var user = await provider(context, listen: false).login(nombre, contra);
       if (user != null) {
+      
         inicioUsuario(context, user);
       } else {
         ScaffoldMessenger.of(context).showSnackBar(

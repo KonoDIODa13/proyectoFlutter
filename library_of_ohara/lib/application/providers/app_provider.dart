@@ -1,5 +1,6 @@
 //import 'package:bcrypt/bcrypt.dart';
 import 'package:flutter/material.dart';
+import 'package:library_of_ohara/application/model/usuario_libro.dart';
 import 'package:library_of_ohara/application/services/libro_service.dart';
 import 'package:library_of_ohara/application/services/usuario_service.dart';
 import 'package:library_of_ohara/application/model/libro.dart';
@@ -7,12 +8,9 @@ import 'package:library_of_ohara/application/model/usuario.dart';
 import 'package:library_of_ohara/application/db_manager/db_manager.dart';
 
 class AppProvider extends ChangeNotifier {
-  //late Usuario usuario;
   late DbManager dbManager;
   late UsuarioService usuarioService;
   late LibroService libroservice;
-
-  //late List<Libro> listaLibros = [];
 
   AppProvider() {
     dbManager = DbManager();
@@ -26,8 +24,6 @@ class AppProvider extends ChangeNotifier {
 
   void inicializarBD() async {
     await dbManager.openDB();
-
-    await listaLibros();
     notifyListeners();
   }
 
@@ -40,12 +36,12 @@ class AppProvider extends ChangeNotifier {
     return usuario;
   }
 
-  Future<Usuario?> register(Usuario usuarioRegistro) async {
+  Future<Usuario?> register(String nombre, String contra) async {
     /*var contrasenaCifrada =
         BCrypt.hashpw(usuarioRegistro.getContrasena(), BCrypt.gensalt());
     usuarioRegistro.setContrasena(contrasenaCifrada);*/
     Usuario? usuario;
-    var user = await usuarioService.register(usuarioRegistro);
+    var user = await usuarioService.register(nombre, contra);
     if (user != null) {
       usuario = user;
     }
@@ -56,8 +52,12 @@ class AppProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<List<Libro>> listaLibros() async {
+  Future<List<Libro>> listaLibros() {
     return libroservice.getLibros();
+  }
+
+  Future<List<UsuarioLibro>> getLibrosByUsuario(int id) {
+    return usuarioService.getLibrosByUsuario(id);
   }
   /*Future<void> buscarLibros() async {
     var query = await db.query("libro");

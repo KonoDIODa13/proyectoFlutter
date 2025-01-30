@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:library_of_ohara/application/model/libro.dart';
 import 'package:library_of_ohara/application/model/usuario.dart';
+import 'package:library_of_ohara/application/model/usuario_libro.dart';
 import 'package:path/path.dart' as path;
 
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
@@ -23,6 +24,8 @@ class DbManager {
       path,
     );
     createDBUsuario();
+    createDBUsuarioLibro();
+    createDBLibro();
     return db;
   }
 
@@ -46,7 +49,7 @@ class DbManager {
   ''');
   }
 
-  Future<void> crearDBLibros() async {
+  Future<void> createDBLibro() async {
     // debido a la falta de tiempo, de momento tanto el autor como genero son
     // de tipo texto y no una clase como tal.
     // ademas, la fecha de publicacion es texto aunque trabaje con ella como si fuera
@@ -62,6 +65,19 @@ class DbManager {
     fechaPublicacion TEXT
     )
 ''');
+  }
+
+  Future<void> createDBUsuarioLibro() async {
+    await db.execute('''
+    CREATE TABLE IF NOT EXISTS usuarios_libros (
+    usuario_id INTEGER,
+    libro_id INTEGER,
+    estado TEXT
+    PRIMARY KEY (usuario_id, libro_id),
+    FOREIGN KEY (usuario_id) REFERENCES usuario(id) ON DELETE CASCADE,
+    FOREIGN KEY (libro_id) REFERENCES libro(id) ON DELETE CASCADE
+  )
+  ''');
   }
 
   Future<bool> compruebaUsuario(String nombre, String contra) async {
@@ -82,19 +98,29 @@ class DbManager {
     return usuario;
   }
 
-  Future<Usuario?> register(Usuario usuarioRegister) async {
+  Future<Usuario?> register(String nombre, String contra) async {
     Usuario? usuario;
-    if (!await compruebaUsuario(
-        usuarioRegister.getNombre(), usuarioRegister.getContrasena())) {
-      usuario = await getUsuario(usuarioRegister.getNombre());
+    if (!await compruebaUsuario(nombre, contra)) {
+      usuario = await getUsuario(nombre);
     }
     return usuario;
   }
 
   Future<Usuario> getUsuario(String nombre) async {
     var user =
-        await db.query("usuario", where: "nombre= ?", whereArgs: [nombre]); 
-    return Usuario.fromMap(user.first);
+        await db.query("usuario", where: "nombre= ?", whereArgs: [nombre]);
+    Usuario usuario = Usuario.fromMap(user.first);
+    return usuario;
+  }
+
+  Future<List<UsuarioLibro>> getLibrosByUsuario(int idUsuario) async {
+    final List<Map<String, dynamic>> results = await db.rawQuery('''
+    SELECT usuario_id, libro_id, estado
+    FROM usuarios_libros
+    WHERE usuario_id = ?
+  ''', [idUsuario]);
+
+    return results.map((map) => UsuarioLibro.fromMap(map)).toList();
   }
 
   Future<void> modificarImg(Usuario usuario, String rutaImg) async {
@@ -103,7 +129,7 @@ class DbManager {
   }
 
   Future<List<Libro>> getLibros() async {
-    List<Libro> libros=[];
+    List<Libro> libros = [];
     var query = await db.query("libro");
     for (var libro in query) {
       libros.add(Libro.fromMap(libro));

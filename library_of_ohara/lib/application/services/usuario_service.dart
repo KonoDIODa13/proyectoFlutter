@@ -1,5 +1,6 @@
 import 'package:library_of_ohara/application/db_manager/db_manager.dart';
 import 'package:library_of_ohara/application/model/usuario.dart';
+import 'package:library_of_ohara/application/model/usuario_libro.dart';
 
 class UsuarioService {
   late DbManager dbManager;
@@ -9,16 +10,14 @@ class UsuarioService {
   }
 
   Future<Usuario?> login(String nombre, String contra) async {
-    Usuario? usuario;
-    if (await dbManager.login(nombre, contra) != null) {
-      usuario = await dbManager.login(nombre, contra);
-    }
-    return usuario;
+    return await dbManager.login(nombre, contra);
   }
 
-  Future<Usuario?> register(Usuario usuarioRegistro) async {
-    Usuario? usuario;
+  Future<Usuario?> register(String nombre, String contra) async {
+    return await dbManager.register(nombre, contra);
+  }
 
-    return usuario;
+  Future<List<UsuarioLibro>> getLibrosByUsuario(int id) async {
+    return await dbManager.getLibrosByUsuario(id);
   }
 }

@@ -57,12 +57,11 @@ class _RegisterState extends State<Register> {
 
   crearCuenta(BuildContext context) async {
     if (_formKey.currentState!.validate()) {
-      var usuario = Usuario(
-          nombre: nombreController.text,
-          gmail: gmailController.text,
-          contrasena: contrasenaController.text);
+      var nombre = nombreController.text;
+      var contra = nombreController.text;
 
-      var user = await provider(context, listen: false).register(usuario);
+      var user =
+          await provider(context, listen: false).register(nombre, contra);
       if (user != null) {
         inicioUsuario(context, user);
       } else {

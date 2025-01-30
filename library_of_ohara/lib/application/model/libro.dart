@@ -1,27 +1,24 @@
 class Libro {
-  String _titulo;
-  String _autor;
-  String _genero;
-  String _isbn;
-  String _descripcion;
-  DateTime _fechaPublicacion;
+  int id = 0;
+  String titulo;
+  String autor;
+  String genero;
+  String isbn;
+  String descripcion;
+  DateTime fechaPublicacion;
 
-  Libro({
-    required titulo,
-    required autor,
-    required genero,
-    required isbn,
-    required descripcion,
-    required fechaPublicacion,
-  })  : _titulo = titulo,
-        _autor = autor,
-        _genero = genero,
-        _isbn = isbn,
-        _descripcion = descripcion,
-        _fechaPublicacion = fechaPublicacion;
+  Libro(
+      {id = 0,
+      required this.titulo,
+      required this.autor,
+      required this.genero,
+      required this.isbn,
+      required this.descripcion,
+      required this.fechaPublicacion});
 
   factory Libro.fromMap(Map<String, Object?> map) {
     return Libro(
+      id: map['id'] as int,
       titulo: map['titulo'] as String,
       autor: map['autor'] as String,
       genero: map['genero'] as String,
@@ -45,7 +42,7 @@ class Libro {
   }
 
   String generarISBN() {
-    String isbn = "9791";
+    String isbn = "979";
     String tit = "";
     String aut = "";
     String gen = "";
@@ -59,52 +56,56 @@ class Libro {
     return isbn;
   }
 
+  getID() {
+    return id;
+  }
+
   getTitulo() {
-    return _titulo;
+    return titulo;
   }
 
   getAutor() {
-    return _autor;
+    return autor;
   }
 
   getGenero() {
-    return _genero;
+    return genero;
   }
 
   getISBN() {
-    return _isbn;
+    return isbn;
   }
 
   getDescripcion() {
-    return _descripcion;
+    return descripcion;
   }
 
   getFechaPublicacion() {
-    return _fechaPublicacion;
+    return fechaPublicacion;
   }
 
   setTitulo(String titulo) {
-    _titulo = titulo;
+    titulo = titulo;
   }
 
   setAutor(String autor) {
-    _autor = autor;
+    autor = autor;
   }
 
   setGenero(String genero) {
-    _genero = genero;
+    genero = genero;
   }
 
   setISBN(String isbn) {
-    _isbn = isbn;
+    isbn = isbn;
   }
 
   setDescripcion(String descripcion) {
-    _descripcion = descripcion;
+    descripcion = descripcion;
   }
 
   setFechaPublicacion(DateTime fechaPublicacion) {
-    _fechaPublicacion = fechaPublicacion;
+    fechaPublicacion = fechaPublicacion;
   }
 
   getPortada() {
