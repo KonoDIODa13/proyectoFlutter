@@ -35,7 +35,6 @@ class DbManager {
   }
 
   Future<void> createDBUsuario() async {
-    db = await getDB();
     await db.execute('''
       CREATE TABLE IF NOT EXISTS usuario (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -48,7 +47,6 @@ class DbManager {
   }
 
   Future<void> crearDBLibros() async {
-    db = await getDB();
     // debido a la falta de tiempo, de momento tanto el autor como genero son
     // de tipo texto y no una clase como tal.
     // ademas, la fecha de publicacion es texto aunque trabaje con ella como si fuera
