@@ -64,7 +64,7 @@ class DbManager {
     descripcion TEXT,
     fechaPublicacion TEXT
     )
-''');
+    ''');
   }
 
   Future<void> createDBUsuarioLibro() async {
@@ -72,7 +72,7 @@ class DbManager {
     CREATE TABLE IF NOT EXISTS usuarios_libros (
     usuario_id INTEGER,
     libro_id INTEGER,
-    estado TEXT
+    estado TEXT,
     PRIMARY KEY (usuario_id, libro_id),
     FOREIGN KEY (usuario_id) REFERENCES usuario(id) ON DELETE CASCADE,
     FOREIGN KEY (libro_id) REFERENCES libro(id) ON DELETE CASCADE
@@ -98,10 +98,12 @@ class DbManager {
     return usuario;
   }
 
-  Future<Usuario?> register(String nombre, String contra) async {
+  Future<Usuario?> register(Usuario preUsuario) async {
     Usuario? usuario;
-    if (!await compruebaUsuario(nombre, contra)) {
-      usuario = await getUsuario(nombre);
+    if (!await compruebaUsuario(
+        preUsuario.getNombre(), preUsuario.getContrasena())) {
+      await db.insert("usuario", preUsuario.toMap());
+      usuario = await getUsuario(preUsuario.getNombre());
     }
     return usuario;
   }
@@ -147,6 +149,27 @@ class DbManager {
       insertado = true;
     }
     return insertado;
+  }
+
+  Future<bool> insertarLibroAUsuario(int idUsuario, int idLibro) async {
+    bool insertado = false;
+    if (!(await comprobarExiste(idUsuario, idLibro))) {
+      UsuarioLibro usuarioLibro = UsuarioLibro(
+          usuarioId: idUsuario, libroId: idLibro, estado: "sin empezar");
+      db.insert("usuarios_libro", usuarioLibro.toMap());
+      insertado = true;
+    }
+    return insertado;
+  }
+
+  Future<bool> comprobarExiste(idUsuario, idLibro) async {
+    bool existe = false;
+    var query = await db.query("usuarios_libros",
+        where: "usuario_id=? and libro_id=?", whereArgs: [idUsuario, idLibro]);
+    if (query.isNotEmpty) {
+      existe = true;
+    }
+    return existe;
   }
 
   String generarISBN(Libro libro) {

@@ -20,36 +20,31 @@ class _DrawwerState extends State<Drawwer> {
     Navigator.push(context, MaterialPageRoute(builder: (context) => InitApp()));
   }
 
-  cambiarImagen(){
-    var controlador= TextEditingController();
-    var etiqueta= "Cambiar imagen:";
-    String? validar(String? value){
-       if (value == null || value.isEmpty) {
-      return 'Por favor, ingresa la url de la imagen.';
-    }
+  cambiarImagen() {
+    var controlador = TextEditingController();
+    var etiqueta = "Cambiar imagen:";
+    String? validar(String? value) {
+      if (value == null || value.isEmpty) {
+        return 'Por favor, ingresa la url de la imagen.';
+      }
 
       return null;
     }
 
-    
-    
-    showDialog(context: context, builder: (context) {
-      return Container(
-        child: Form( 
-         
-        child :Column( children: [  
-         
-        Input(controlador: controlador, etiqueta: etiqueta, validacion: validar),
-        ElevatedButton(onPressed: (){
-          
-        }, child: Text("modificar"))
-        ]
-        )
-        )
-      );
-      
-    },);
-
+    showDialog(
+      context: context,
+      builder: (context) {
+        return Container(
+            child: Form(
+                child: Column(children: [
+          Input(
+              controlador: controlador,
+              etiqueta: etiqueta,
+              validacion: validar),
+          ElevatedButton(onPressed: () {}, child: Text("modificar"))
+        ])));
+      },
+    );
   }
 
   modificarUsuario() {}
@@ -57,8 +52,26 @@ class _DrawwerState extends State<Drawwer> {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      backgroundColor: backgroundColor,
-      child: ListView(
+        backgroundColor: backgroundColor,
+        child: ListTile(
+          title: Row(
+            children: [
+              Icon(
+                Icons.manage_accounts_rounded,
+                color: titleColor,
+              ),
+              Text(
+                "Modificar Usuario",
+                style: TextStyle(color: titleColor),
+              )
+            ],
+          ),
+          onTap: () {
+            modificarUsuario();
+          },
+        )
+
+        /*child: ListView(
         padding: EdgeInsets.only(left: 50),
         children: [
           GestureDetector(
@@ -106,7 +119,7 @@ class _DrawwerState extends State<Drawwer> {
                 ],
               ))*/
         ],
-      ),
-    );
+      ),*/
+        );
   }
 }

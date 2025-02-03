@@ -12,7 +12,7 @@ class Biblioteca extends StatelessWidget {
   final List<Libro> libros;
 
   const Biblioteca({super.key, required this.usuario, required this.libros});
-  
+
   @override
   Widget build(BuildContext context) {
     final double screenWidth = MediaQuery.of(context).size.width;
@@ -40,7 +40,7 @@ class Biblioteca extends StatelessWidget {
           mainAxisSpacing: 10,
         ), // Espaciado vertical entre celdas,)
         itemBuilder: (context, index) {
-          return BookCard(libro: libros[index]);
+          return BookCard(usuario: usuario, libro: libros[index]);
         },
       ),
     );

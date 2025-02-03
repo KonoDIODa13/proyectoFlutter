@@ -5,13 +5,7 @@
         genero: "Fantasia",
         isbn: "1",
         descripcion:
-            "Tiene lugar en un equivalente a principios del siglo XVIII, en el distópico mundo de Scadrial, donde cae ceniza constantemente del cielo,"
-            " las plantas son color café, y brumas sobrenaturales cubren el paisaje cada noche. Mil años antes del inicio de la novela,"
-            " el profetizado Héroe de las Eras ascendió a la divinidad en el Pozo de la ascensión para repeler la Profundidad, un terror que acecha el mundo,"
-            " cuya naturaleza real se ha perdido con el tiempo. Aunque la Profundidad fue exitosamente repelida y la humanidad se salvó, el mundo fue cambiado a su forma actual por el Héroe,"
-            " quién tomó el título 'Lord Legislador' y ha gobernado sobre el Imperio Final por mil años como un tirano inmortal y dios. Bajo su reinado,"
-            " la sociedad fue estratificada en la nobleza, que se cree que fueron los descendientes de los amigos y aliados que le ayudaron a conseguir la divinidad, y los skaa,"
-            " el campesinado brutalmente oprimido que desciende de aquellos que se opusieron a él.",
+            "Segundo libro del Nacidos de la Bruma de la saga del Cosmere.",
         fechaPublicacion: DateTime.parse("2006-06-17"));
     libro1.setISBN(generarISBN(libro1));
     if (await insertarLibro(libro1)) {
@@ -26,9 +20,7 @@
         autor: "Brandon Sanderson",
         genero: "Fantasia",
         isbn: "2",
-        descripcion: "Durante mil años han caído las cenizas y nada florece. Durante mil años los skaa han sido esclavizados y viven sumidos en un miedo inevitable."
-        " Durante mil años el Lord Legislador reina con un poder absoluto gracias al terror, a sus poderes y a su inmortalidad. Pero vencer y matar al Lord Legislador fue la parte sencilla."
-        " El verdadero desafío será sobrevivir a las consecuencias de su caída.",
+        descripcion: "Segundo libro del Nacidos de la Bruma de la saga del Cosmere.",
         fechaPublicacion: DateTime.parse("2007-08-21"));
     libro2.setISBN(generarISBN(libro2));
     if (await insertarLibro(libro2)) {
@@ -44,12 +36,7 @@
         genero: "Fantasia",
         isbn: "2",
         descripcion:
-            "Durante mil años los skaa han vivido esclavizados y sumidos en el miedo al Lord Legislador, que ha reinado con un poder absoluto gracias al terror"
-            " y a la poderosa magia de la alomancia. Kelsier, el Superviviente, el único que ha logrado huir de los Pozos de Hathsin, encuentra a Vin, una pobre chica skaa con mucha suerte."
-            " Los dos se unen a la rebelión que los skaa intentan desde hace un milenio y vencen al Lord Legislador. Pero acabar con el Lord Legislador es la parte sencilla."
-            " El verdadero desafío consistirá en sobrevivir a las consecuencias de su caída. En El Héroe de las Eras se comprende el porqué de la niebla y las cenizas,"
-            " las tenebrosas acciones del Lord Legislador y la naturaleza del Pozo de la Ascensión. Vin y el Rey Elend buscan en los últimos escondites de recursos del Lord Legislador"
-            " y descubren el peligro que acecha a la humanidad. ¿Conseguirán detenerlo a tiempo?",
+            "Primer libro del Nacidos de la Bruma de la saga del Cosmere.",
         fechaPublicacion: DateTime.parse("2008-10-14"));
     libro3.setISBN(generarISBN(libro3));
     if (await insertarLibro(libro3)) {
@@ -65,12 +52,7 @@
         genero: "Fantasia",
         isbn: "1",
         descripcion:
-            "La historia va rotando entre los puntos de vista de Kaladin, Shallan Davar, Szeth-hijo-hijo-Vallano, Dalinar Kholin y algunos personajes secundarios,"
-            " los cuales parecen llevar vidas aparentemente desvinculadas entre sí. Szeth, un Shin expulsado de su sociedad y condenado a obedecer a sus constantemente cambiantes maestros,"
-            " es enviado a asesinar al rey de una de las naciones más poderosas del mundo, Alezkar. Según va avanzando la historia, Szeth va cambiando de maestro,"
-            " tratando de esconder que posee una hoja esquirlada, una espada mítica usada por los Caballeros Radiantes y que es capaz de cortar cualquier material."
-            " Él también tiene acceso a una serie de poderes que no están disponibles para los humanos normales ('Potenciación'), los cuales fueron poseídos por los Caballeros Radiantes"
-            " y se creían perdidos, haciéndole increíblemente difícil derrotarle en batalla.",
+            "Primer libro del Archivo de las Tormentas de la saga del Cosmere.",
         fechaPublicacion: DateTime.parse("2010-07-31"));
     libro4.setISBN(generarISBN(libro4));
     if (await insertarLibro(libro4)) {
@@ -86,9 +68,7 @@
         genero: "Fantasia",
         isbn: "2",
         descripcion:
-            "Hace años, Szeth-hijo-hijo-Vallano, el Asesino de Blanco, fue enviado por los parshendi para asesinar al rey alezi Gavilar Kholin (por razones aún no reveladas al lector)."
-            " Este asesinato resultó en el Pacto de Venganza entre los altos príncipes de Alezkar y la Guerra del Juicio contra los Parshendi. Ahora Szeth vuelve a estar activo y"
-            " es enviado por el rey Taravangian de Kharbranth para matar al alto príncipe Dalinar Kholin (hermano del difunto rey Gavilar).",
+            "Segundo libro del Archivo de las Tormentas de la saga del Cosmere.",
         fechaPublicacion: DateTime.parse("2014-03-04"));
     libro5.setISBN(generarISBN(libro5));
     if (await insertarLibro(libro5)) {
@@ -103,10 +83,7 @@
         genero: "Fantasia",
         isbn: "2",
         descripcion:
-            "La humanidad se enfrenta a una nueva Desolación con el regreso de los Portadores del Vacío, un enemigo tan grande en número como en sed de venganza."
-            " La victoria fugaz de los ejercitos alezi de Dalinar Kholin ha tenido consecuencias: el enemigo parshendi ha convocado la violenta tormenta eterna,"
-            " que arrasa el mundo y hace que los hasta ahora pacíficos parshmenios descubran con horror que llevan un milenio esclavizados por los humanos. Al mismo tiempo,"
-            " en una desesperada huida para alertar a su familia de la amenaza, Kaladin se pregunta si la repentina ira de los parshmenios está justificada.",
+            "Tercer libro del Archivo de las Tormentas de la saga del Cosmere.",
         fechaPublicacion: DateTime.parse("2017-11-14"));
     libro6.setISBN(generarISBN(libro6));
     if (await insertarLibro(libro6)) {

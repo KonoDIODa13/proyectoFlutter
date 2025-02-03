@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:library_of_ohara/application/model/libro.dart';
+import 'package:library_of_ohara/application/model/usuario_libro.dart';
 import 'package:library_of_ohara/application/views/init_app.dart';
 import 'package:library_of_ohara/application/views/login.dart';
 import 'package:library_of_ohara/application/views/user_page.dart';
@@ -58,12 +60,16 @@ class _RegisterState extends State<Register> {
   crearCuenta(BuildContext context) async {
     if (_formKey.currentState!.validate()) {
       var nombre = nombreController.text;
-      var contra = nombreController.text;
+      var contrasena = contrasenaController.text;
+      var gmail = gmailController.text;
+      var preUsuario =
+          Usuario(nombre: nombre, gmail: gmail, contrasena: contrasena);
 
-      var user =
-          await provider(context, listen: false).register(nombre, contra);
-      if (user != null) {
-        inicioUsuario(context, user);
+      var usuario = await provider(context, listen: false).register(preUsuario);
+      if (usuario != null) {
+        var listaLibrosByUsuario = await provider(context, listen: false)
+            .getLibrosByUsuario(usuario.getID());
+        inicioUsuario(context, usuario, listaLibrosByUsuario);
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: const Text("error al insertar dicho usuario.")));
@@ -71,9 +77,9 @@ class _RegisterState extends State<Register> {
     }
   }
 
-  inicioUsuario(BuildContext context, Usuario user) {
+  inicioUsuario(BuildContext context, Usuario user, List<UsuarioLibro>listaLibrosByUsuario) {
     Navigator.push(context,
-        MaterialPageRoute(builder: (context) => UserPage(usuario: user)));
+        MaterialPageRoute(builder: (context) => UserPage(usuario: user, listaLibrosByUsuario: listaLibrosByUsuario,)));
   }
 
   void volver(BuildContext context) {

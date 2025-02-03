@@ -9,8 +9,9 @@ import 'package:provider/provider.dart';
 
 class UserPage extends StatefulWidget {
   final Usuario usuario;
-
-  const UserPage({super.key, required this.usuario});
+  var listaLibrosByUsuario = [];
+  UserPage(
+      {super.key, required this.usuario, required this.listaLibrosByUsuario});
 
   @override
   State<UserPage> createState() => _UserPageState();

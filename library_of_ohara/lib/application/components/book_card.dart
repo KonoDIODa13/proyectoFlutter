@@ -1,20 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:library_of_ohara/application/views/book_window.dart';
 import 'package:library_of_ohara/application/model/libro.dart';
+import 'package:library_of_ohara/application/model/usuario.dart';
 import 'package:library_of_ohara/themes/colors.dart';
 
-class BookCard extends StatefulWidget {
+class BookCard extends StatelessWidget {
+  final Usuario usuario;
   final Libro libro;
-  const BookCard({super.key, required this.libro});
+  const BookCard({super.key, required this.usuario, required this.libro});
 
-  @override
-  State<BookCard> createState() => _BookCardState();
-}
-
-class _BookCardState extends State<BookCard> {
   @override
   Widget build(BuildContext context) {
     final double screenWidth = MediaQuery.of(context).size.width;
-    String portada = "assets/images/${widget.libro.getPortada()}.jpg";
+    String portada = "assets/images/${libro.getPortada()}.jpg";
     double fontSize = 13;
     if (screenWidth > 600) {
       fontSize = 15;
@@ -26,7 +24,7 @@ class _BookCardState extends State<BookCard> {
       color: backgroundCardColor,
       child: Column(
         children: [
-          Text(widget.libro.getTitulo(),
+          Text(libro.getTitulo(),
               style: TextStyle(
                 color: titleColor,
                 fontSize: fontSize,
@@ -38,7 +36,16 @@ class _BookCardState extends State<BookCard> {
             portada,
             fit: BoxFit.cover,
           )),
-          Text("Autor: ${widget.libro.getAutor()}")
+          ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            BookWindow(usuario: usuario, libro: libro)));
+                //Navigator.push(context, MaterialPageRoute(builder: (context) => InitApp()));
+              },
+              child: Text("Ver mas"))
         ],
       ),
     );

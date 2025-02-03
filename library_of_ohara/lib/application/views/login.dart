@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:library_of_ohara/application/model/usuario.dart';
+import 'package:library_of_ohara/application/model/usuario_libro.dart';
 import 'package:library_of_ohara/application/views/init_app.dart';
 import 'package:library_of_ohara/application/views/register.dart';
 import 'package:library_of_ohara/application/views/user_page.dart';
@@ -59,22 +60,22 @@ class _LoginState extends State<Login> {
       var nombre = nombreController.text;
       var contra = contrasenaController.text;
 
-      var user = await provider(context, listen: false).login(nombre, contra);
-      if (user != null) {
-      
-        inicioUsuario(context, user);
+      var usuario = await provider(context, listen: false).login(nombre, contra);
+      if (usuario != null) {
+        var listaLibrosByUsuario = await provider(context, listen: false)
+            .getLibrosByUsuario(usuario.getID());
+        inicioUsuario(context, usuario, listaLibrosByUsuario);
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: const Text("error al iniciar sesión.")));
+            SnackBar(content: const Text("error al insertar dicho usuario.")));
       }
     }
   }
 
-  inicioUsuario(BuildContext context, Usuario user) {
+  inicioUsuario(BuildContext context, Usuario user, List<UsuarioLibro>listaLibrosByUsuario) {
     Navigator.push(context,
-        MaterialPageRoute(builder: (context) => UserPage(usuario: user)));
+        MaterialPageRoute(builder: (context) => UserPage(usuario: user, listaLibrosByUsuario: listaLibrosByUsuario,)));
   }
-
   void volver(BuildContext context) {
     //Navigator.pop(context); esto no me vale en el mismo momento que le pulsas al enlace de abajo
     Navigator.push(context, MaterialPageRoute(builder: (context) => InitApp()));
