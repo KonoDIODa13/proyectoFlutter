@@ -16,18 +16,13 @@ class Biblioteca extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final double screenWidth = MediaQuery.of(context).size.width;
-    // Calcular dinámicamente el número de columnas
-    int crossAxisCount = 2; // Valor por defecto
-    //double fontSize = 13;
+    int crossAxisCount = 2;
+
     if (screenWidth > 600) {
-      crossAxisCount = 3; // Pantallas medianas (tablets)
-      //fontSize = 15;
+      crossAxisCount = 3;
     }
     if (screenWidth > 900) {
       crossAxisCount = 4;
-      //fontSize = 17;
-
-      // Pantallas grandes
     }
 
     return Scaffold(
@@ -35,10 +30,10 @@ class Biblioteca extends StatelessWidget {
       body: GridView.builder(
         itemCount: libros.length,
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: crossAxisCount, // Número de columnas
-          crossAxisSpacing: 10, // Espaciado horizontal entre celdas
+          crossAxisCount: crossAxisCount,
+          crossAxisSpacing: 10,
           mainAxisSpacing: 10,
-        ), // Espaciado vertical entre celdas,)
+        ),
         itemBuilder: (context, index) {
           return BookCard(usuario: usuario, libro: libros[index]);
         },

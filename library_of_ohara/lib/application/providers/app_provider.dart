@@ -24,6 +24,7 @@ class AppProvider extends ChangeNotifier {
     var user = await dbManager.login(nombre, contra);
     if (user != null) {
       usuario = user;
+      print(usuario.getID());
     }
     return usuario;
   }
@@ -40,19 +41,16 @@ class AppProvider extends ChangeNotifier {
     return usuario;
   }
 
-  cerrarSesion() {
-    notifyListeners();
+  Future<List<Libro>> listaLibros() async {
+    return await dbManager.getLibros();
   }
 
-  Future<List<Libro>> listaLibros() {
-    return dbManager.getLibros();
+  Future<List<UsuarioLibro>> getLibrosByUsuario(int id) async {
+    return await dbManager.getLibrosByUsuario(id);
   }
 
-  Future<List<UsuarioLibro>> getLibrosByUsuario(int id) {
-    return dbManager.getLibrosByUsuario(id);
-  }
-
-  Future<bool> insertarLibroAUsuario(int idUsuario,int idLibro) async {
-    return insertarLibroAUsuario(idUsuario, idLibro);
+  Future<bool> insertarLibroAUsuario(int idUsuario, int idLibro) async {
+     print("a ver is insertar");
+    return await dbManager.insertarLibroAUsuario(idUsuario, idLibro);
   }
 }

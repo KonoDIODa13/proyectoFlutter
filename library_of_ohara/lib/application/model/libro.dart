@@ -1,5 +1,5 @@
 class Libro {
-  int id = 0;
+  int? id;
   String titulo;
   String autor;
   String genero;
@@ -8,7 +8,7 @@ class Libro {
   DateTime fechaPublicacion;
 
   Libro(
-      {id = 0,
+      {this.id,
       required this.titulo,
       required this.autor,
       required this.genero,
@@ -18,7 +18,7 @@ class Libro {
 
   factory Libro.fromMap(Map<String, Object?> map) {
     return Libro(
-      id: map['id'] as int,
+      id: map['id'] as int?,
       titulo: map['titulo'] as String,
       autor: map['autor'] as String,
       genero: map['genero'] as String,
@@ -30,6 +30,7 @@ class Libro {
 
   Map<String, Object?> toMap() {
     return {
+      //'id': getID(),
       'titulo': getTitulo(),
       'autor': getAutor(),
       'genero': getGenero(),

@@ -156,7 +156,7 @@ class DbManager {
     if (!(await comprobarExiste(idUsuario, idLibro))) {
       UsuarioLibro usuarioLibro = UsuarioLibro(
           usuarioId: idUsuario, libroId: idLibro, estado: "sin empezar");
-      db.insert("usuarios_libro", usuarioLibro.toMap());
+      await db.insert("usuarios_libros", usuarioLibro.toMap());
       insertado = true;
     }
     return insertado;

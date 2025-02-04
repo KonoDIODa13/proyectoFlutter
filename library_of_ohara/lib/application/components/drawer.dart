@@ -16,7 +16,7 @@ class _DrawwerState extends State<Drawwer> {
   final provider = Provider.of<AppProvider>;
 
   cerrarSesion(BuildContext context) async {
-    await Provider.of<AppProvider>(context).cerrarSesion();
+    //await Provider.of<AppProvider>(context).cerrarSesion();
     Navigator.push(context, MaterialPageRoute(builder: (context) => InitApp()));
   }
 
