@@ -13,41 +13,43 @@ class BookCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final double screenWidth = MediaQuery.of(context).size.width;
     String portada = "assets/images/${libro.getPortada()}.jpg";
-    double fontSize = 13;
+    double fontSize = 15;
     if (screenWidth > 600) {
-      fontSize = 15;
-    }
-    if (screenWidth > 900) {
       fontSize = 17;
     }
-    return Card(
-      color: backgroundCardColor,
-      child: Column(
-        children: [
-          Text(libro.getTitulo(),
-              style: TextStyle(
-                color: titleColor,
-                fontSize: fontSize,
-                fontWeight: FontWeight.bold,
+    if (screenWidth > 900) {
+      fontSize = 20;
+    }
+    return GestureDetector(
+        onTap: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) =>
+                      BookWindow(usuario: usuario, libro: libro)));
+        },
+        child: Card(
+          color: backgroundCardColor,
+          child: Column(
+            children: [
+              Container(
+                width: screenWidth,
+                color: backgroundColor2,
+                child: Text(libro.getTitulo(),
+                    style: TextStyle(
+                      color: titleColor,
+                      fontSize: fontSize,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    textAlign: TextAlign.center),
               ),
-              textAlign: TextAlign.center),
-          Expanded(
-              child: Image.asset(
-            portada,
-            fit: BoxFit.cover,
-          )),
-          ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                            BookWindow(usuario: usuario, libro: libro)));
-                //Navigator.push(context, MaterialPageRoute(builder: (context) => InitApp()));
-              },
-              child: Text("Ver mas"))
-        ],
-      ),
-    );
+              Expanded(
+                  child: Image.asset(
+                portada,
+                fit: BoxFit.cover,
+              )),
+            ],
+          ),
+        ));
   }
 }
