@@ -63,12 +63,9 @@ class _RegisterState extends State<Register> {
       var gmail = gmailController.text;
       var preUsuario =
           Usuario(nombre: nombre, gmail: gmail, contrasena: contrasena);
-
       var usuario = await provider(context, listen: false).register(preUsuario);
       if (usuario != null) {
-        var listaLibrosByUsuario = await provider(context, listen: false)
-            .getLibrosByUsuario(usuario.getID());
-        inicioUsuario(context, usuario, listaLibrosByUsuario);
+        inicioUsuario(context);
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: const Text("error al insertar dicho usuario.")));
@@ -76,9 +73,9 @@ class _RegisterState extends State<Register> {
     }
   }
 
-  inicioUsuario(BuildContext context, Usuario user, List<UsuarioLibro>listaLibrosByUsuario) {
-    Navigator.push(context,
-        MaterialPageRoute(builder: (context) => UserPage(usuario: user, listaLibrosByUsuario: listaLibrosByUsuario,)));
+  inicioUsuario(BuildContext context) {
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => UserPage()));
   }
 
   void volver(BuildContext context) {

@@ -7,12 +7,13 @@ import 'package:library_of_ohara/themes/fonts.dart';
 import 'package:provider/provider.dart';
 
 class BookWindow extends StatelessWidget {
-  final Usuario usuario;
   final Libro libro;
-  const BookWindow({super.key, required this.usuario, required this.libro});
-
+  BookWindow({super.key, required this.libro});
+  final provider = Provider.of<AppProvider>;
+  late Usuario usuario;
   @override
   Widget build(BuildContext context) {
+    usuario = provider(context, listen: false).usuario;
     final double screenWidth = MediaQuery.of(context).size.width;
     final double screenHeight = MediaQuery.of(context).size.height;
     double fontSize = 15;
@@ -88,10 +89,9 @@ class BookWindow extends StatelessWidget {
                       style: TextStyle(fontSize: fontSize, color: titleColor),
                     ),
                     SizedBox(height: espacioEntre),
-                    
                     ElevatedButton(
-                      style: ElevatedButton.styleFrom(backgroundColor: backgroundColor2),
-                      
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: backgroundColor2),
                         onPressed: () async {
                           if (await Provider.of<AppProvider>(context,
                                   listen: false)
@@ -106,7 +106,10 @@ class BookWindow extends StatelessWidget {
                                     "No se puede añadir a la lista.")));
                           }
                         },
-                        child: Text("Añadir a la lista", style: TextStyle(color: titleColor),))
+                        child: Text(
+                          "Añadir a la lista",
+                          style: TextStyle(color: titleColor),
+                        ))
                   ],
                 ))
               ],

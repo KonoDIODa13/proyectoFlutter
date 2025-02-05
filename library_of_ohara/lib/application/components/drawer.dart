@@ -53,22 +53,49 @@ class _DrawwerState extends State<Drawwer> {
   Widget build(BuildContext context) {
     return Drawer(
         backgroundColor: backgroundColor,
-        child: ListTile(
-          title: Row(
-            children: [
-              Icon(
-                Icons.manage_accounts_rounded,
-                color: titleColor,
+        child: ListView(
+          children: [
+            ListTile(
+              title: Row(
+                children: [
+                  Icon(
+                    Icons.manage_accounts_rounded,
+                    color: titleColor,
+                  ),
+                  Text(
+                    "Modificar Usuario",
+                    style: TextStyle(color: titleColor),
+                  )
+                ],
               ),
-              Text(
-                "Modificar Usuario",
-                style: TextStyle(color: titleColor),
-              )
-            ],
-          ),
-          onTap: () {
-            modificarUsuario();
-          },
+              onTap: () {
+                modificarUsuario();
+              },
+            ),
+            ListTile(
+              title: Row(
+                children: [
+                  Icon(Icons.image_outlined, color: titleColor),
+                  Text(
+                    "Cambiar Foto",
+                    style: TextStyle(color: titleColor),
+                  )
+                ],
+              ),
+              onTap: () {},
+            ),
+            ListTile(
+              title: Row(
+                children: [
+                  Icon(
+                    Icons.no_accounts_rounded,
+                    color: titleColor,
+                  ),
+                  Text("Cerrar Sesión", style: TextStyle(color: titleColor))
+                ],
+              ),
+            )
+          ],
         )
 
         /*child: ListView(

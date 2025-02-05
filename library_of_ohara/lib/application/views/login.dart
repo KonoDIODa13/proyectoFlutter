@@ -59,12 +59,10 @@ class _LoginState extends State<Login> {
     if (_formKey.currentState!.validate()) {
       var nombre = nombreController.text;
       var contra = contrasenaController.text;
-
-      var usuario = await provider(context, listen: false).login(nombre, contra);
+      var usuario =
+          await provider(context, listen: false).login(nombre, contra);
       if (usuario != null) {
-        var listaLibrosByUsuario = await provider(context, listen: false)
-            .getLibrosByUsuario(usuario.getID());
-        inicioUsuario(context, usuario, listaLibrosByUsuario);
+        inicioUsuario(context);
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: const Text("error al insertar dicho usuario.")));
@@ -72,12 +70,14 @@ class _LoginState extends State<Login> {
     }
   }
 
-  inicioUsuario(BuildContext context, Usuario user, List<UsuarioLibro>listaLibrosByUsuario) {
-    Navigator.push(context,
-        MaterialPageRoute(builder: (context) => UserPage(usuario: user, listaLibrosByUsuario: listaLibrosByUsuario,)));
+  inicioUsuario(
+    BuildContext context,
+  ) {
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => UserPage()));
   }
+
   void volver(BuildContext context) {
-    //Navigator.pop(context); esto no me vale en el mismo momento que le pulsas al enlace de abajo
     Navigator.push(context, MaterialPageRoute(builder: (context) => InitApp()));
   }
 

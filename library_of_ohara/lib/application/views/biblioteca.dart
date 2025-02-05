@@ -8,13 +8,15 @@ import 'package:provider/provider.dart';
 
 class Biblioteca extends StatelessWidget {
   final provider = Provider.of<AppProvider>;
-  final Usuario usuario;
-  final List<Libro> libros;
+  late Usuario usuario;
+  late List<Libro> libros;
 
-  const Biblioteca({super.key, required this.usuario, required this.libros});
+  Biblioteca({super.key});
 
   @override
   Widget build(BuildContext context) {
+    usuario = provider(context).usuario;
+    libros = provider(context).libros;
     final double screenWidth = MediaQuery.of(context).size.width;
     int crossAxisCount = 2;
 
@@ -35,7 +37,7 @@ class Biblioteca extends StatelessWidget {
           mainAxisSpacing: 10,
         ),
         itemBuilder: (context, index) {
-          return BookCard(usuario: usuario, libro: libros[index]);
+          return BookCard(libro: libros[index]);
         },
       ),
     );

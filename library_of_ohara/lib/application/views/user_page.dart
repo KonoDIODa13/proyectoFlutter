@@ -8,10 +8,7 @@ import 'package:library_of_ohara/themes/fonts.dart';
 import 'package:provider/provider.dart';
 
 class UserPage extends StatefulWidget {
-  final Usuario usuario;
-  var listaLibrosByUsuario = [];
-  UserPage(
-      {super.key, required this.usuario, required this.listaLibrosByUsuario});
+  UserPage({super.key});
 
   @override
   State<UserPage> createState() => _UserPageState();
@@ -19,6 +16,7 @@ class UserPage extends StatefulWidget {
 
 class _UserPageState extends State<UserPage> {
   final provider = Provider.of<AppProvider>;
+  late Usuario usuario;
   int indice = 1;
   Widget body = Center(child: Text("aun en desarrollo"));
   changeWindow(int index) async {
@@ -29,15 +27,14 @@ class _UserPageState extends State<UserPage> {
           indice = index;
 
           body = Biblioteca(
-            usuario: widget.usuario,
-            libros: libros,
+            
           );
         });
         break;
       case 1:
         setState(() {
           indice = index;
-          body = Center(child: Text(widget.usuario.getNombre()));
+          body = Center(child: Text(usuario.getNombre()));
         });
         break;
       case 2:
@@ -52,23 +49,22 @@ class _UserPageState extends State<UserPage> {
 
   @override
   Widget build(BuildContext context) {
+    usuario = provider(context, listen: false).usuario;
     return Scaffold(
       drawer: Drawwer(),
       appBar: AppBar(
         centerTitle: true,
         backgroundColor: backgroundColor2,
         title: Text(
-          widget.usuario.getNombre(),
+          usuario.getNombre(),
           style: TextStyle(color: titleColor, fontSize: 40, fontFamily: titles),
         ),
         leading: Builder(builder: (context) {
           return GestureDetector(
             child: CircleAvatar(
-              backgroundImage: NetworkImage(widget.usuario.getImagen
-                      .toString()
-                      .isEmpty
+              backgroundImage: NetworkImage(usuario.getImagen.toString().isEmpty
                   ? "https://preview.redd.it/h5gnz1ji36o61.png?width=225&format=png&auto=webp&s=84379f8d3bbe593a2e863c438cd03e84c8a474fa"
-                  : widget.usuario.getImagen()),
+                  : usuario.getImagen()),
             ),
             onTap: () {
               Scaffold.of(context).openDrawer();
