@@ -172,6 +172,12 @@ class DbManager {
     return existe;
   }
 
+  Future<Libro> libroByID(int idLibro) async {
+    var query = await db.query("libro", where: "id=?", whereArgs: [idLibro]);
+    Libro libro = Libro.fromMap(query.first);
+    return libro;
+  }
+
   String generarISBN(Libro libro) {
     String isbn = "979";
     String tit = "";

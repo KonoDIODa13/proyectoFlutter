@@ -9,8 +9,9 @@ import 'package:provider/provider.dart';
 class BookWindow extends StatelessWidget {
   final Libro libro;
   BookWindow({super.key, required this.libro});
-  final provider = Provider.of<AppProvider>;
   late Usuario usuario;
+  final provider = Provider.of<AppProvider>;
+
   @override
   Widget build(BuildContext context) {
     usuario = provider(context, listen: false).usuario;
@@ -126,56 +127,7 @@ class BookWindow extends StatelessWidget {
           Icons.keyboard_double_arrow_left,
           color: titleColor,
         ),
-      ),
-
-      /*body: Container(
-        width: 1000,
-        height: 1000,
-        color: backgroundCardColor,
-        child: Row(
-          children: [
-            Container(
-              padding: EdgeInsets.all(8),
-              width: 350,
-              height: 500,
-              child: Image.asset(portada),
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Text(
-                  "Autor: ${libro.getAutor()}",
-                ),
-                ElevatedButton(
-                    onPressed: () async {
-                      if (await Provider.of<AppProvider>(context, listen: false)
-                          .insertarLibroAUsuario(
-                              usuario.getID(), libro.getID())) {
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                            content:
-                                const Text("Añadido a la lista con exito.")));
-                      } else {
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                            content:
-                                const Text("No se puede añadir a la lista.")));
-                      }
-                    },
-                    child: Text("Añadir a la Lista."))
-              ],
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.pop(context);
-        },
-        backgroundColor: backgroundColor2,
-        child: Icon(
-          Icons.keyboard_double_arrow_left,
-          color: titleColor,
-        ),
-      ),*/
+      )
     );
   }
 }

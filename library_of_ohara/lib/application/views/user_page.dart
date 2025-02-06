@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:library_of_ohara/application/components/body_usuario.dart';
+import 'package:library_of_ohara/application/model/usuario_libro.dart';
 import 'package:library_of_ohara/application/views/biblioteca.dart';
 import 'package:library_of_ohara/application/components/drawer.dart';
 import 'package:library_of_ohara/application/model/usuario.dart';
@@ -17,39 +19,31 @@ class UserPage extends StatefulWidget {
 class _UserPageState extends State<UserPage> {
   final provider = Provider.of<AppProvider>;
   late Usuario usuario;
+  late List<UsuarioLibro> listaLibrosUsuario;
   int indice = 1;
-  Widget body = Center(child: Text("aun en desarrollo"));
-  changeWindow(int index) async {
-    var libros = await provider(context, listen: false).listaLibros();
-    switch (index) {
-      case 0:
-        setState(() {
-          indice = index;
+  Widget? body;
 
-          body = Biblioteca(
-            
-          );
-        });
-        break;
-      case 1:
-        setState(() {
+  changeWindow(int index) async {
+    setState(() {
+      switch (index) {
+        case 0:
           indice = index;
-          body = Center(child: Text(usuario.getNombre()));
-        });
-        break;
-      case 2:
-        setState(() {
+          body = Biblioteca();
+          break;
+        case 1:
           indice = index;
-          body = Center(child: Text("Aun en desarrollo"));
-        });
-        break;
-      default:
-    }
+          body = BodyUsuario();
+          break;
+        default:
+      }
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     usuario = provider(context, listen: false).usuario;
+    listaLibrosUsuario = provider(context).listaLibrosUsuario;
+    body= BodyUsuario();
     return Scaffold(
       drawer: Drawwer(),
       appBar: AppBar(
@@ -89,13 +83,6 @@ class _UserPageState extends State<UserPage> {
               ),
               backgroundColor: backgroundColor,
               label: "Inicio"),
-          BottomNavigationBarItem(
-              icon: Icon(
-                Icons.bookmarks,
-                color: titleColor,
-              ),
-              backgroundColor: backgroundColor,
-              label: "Tus libros"),
         ],
         backgroundColor: backgroundColor2,
         currentIndex: indice,

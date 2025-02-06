@@ -1,12 +1,15 @@
 //import 'package:library_of_ohara/application/model/libro.dart';
 
+import 'package:library_of_ohara/application/model/libro.dart';
+import 'package:library_of_ohara/application/model/usuario_libro.dart';
+
 class Usuario {
   int? id;
   String nombre;
   String gmail;
   String contrasena;
   String imagen = "";
-  //List<Libro> libros;
+  List<Libro> libros;
   Usuario({
     this.id,
     required this.nombre,
@@ -14,8 +17,8 @@ class Usuario {
     required this.contrasena,
     this.imagen =
         "https://preview.redd.it/h5gnz1ji36o61.png?width=225&format=png&auto=webp&s=84379f8d3bbe593a2e863c438cd03e84c8a474fa",
-    //this.libros = const []
-  });
+    List<Libro>? libros, // Parámetro opcional
+  }) : libros = libros ?? [];
   // Método para convertir un Map en un objeto Usuario
   factory Usuario.fromMap(Map<String, Object?> map) {
     return Usuario(
@@ -70,5 +73,16 @@ class Usuario {
 
   getID() {
     return id;
+  }
+
+  void addlibros(
+      List<UsuarioLibro> listaLibrosUsuario, List<Libro> librosTotales) {
+    for (var libro in librosTotales) {
+      for (var usuarioLibro in listaLibrosUsuario) {
+        if (libro.getID() == usuarioLibro.usuarioId) {
+          libros.add(libro);
+        }
+      }
+    }
   }
 }

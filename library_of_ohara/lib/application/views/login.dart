@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:library_of_ohara/application/model/usuario.dart';
-import 'package:library_of_ohara/application/model/usuario_libro.dart';
 import 'package:library_of_ohara/application/views/init_app.dart';
 import 'package:library_of_ohara/application/views/register.dart';
 import 'package:library_of_ohara/application/views/user_page.dart';

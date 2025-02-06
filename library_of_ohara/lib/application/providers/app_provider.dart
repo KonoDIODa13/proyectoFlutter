@@ -9,6 +9,7 @@ class AppProvider extends ChangeNotifier {
   late DbManager dbManager;
   late Usuario usuario;
   late List<Libro> libros;
+  late List<UsuarioLibro> listaLibrosUsuario;
 
   AppProvider() {
     dbManager = DbManager();
@@ -25,6 +26,10 @@ class AppProvider extends ChangeNotifier {
     var user = await dbManager.login(nombre, contra);
     if (user != null) {
       usuario = user;
+      print("pre listalibrosusuario");
+      rellenarLibrosDeUsuarios();
+      print("pos listalibrosusuario");
+
     }
     return usuario;
   }
@@ -37,8 +42,14 @@ class AppProvider extends ChangeNotifier {
     var user = await dbManager.register(preUsuario);
     if (user != null) {
       usuario = user;
+      rellenarLibrosDeUsuarios();
     }
     return usuario;
+  }
+
+  Future<void> rellenarLibrosDeUsuarios() async {
+    listaLibrosUsuario = await getLibrosByUsuario(usuario.id!);
+    usuario.addlibros(listaLibrosUsuario, libros);
   }
 
   Future<List<Libro>> listaLibros() async {
