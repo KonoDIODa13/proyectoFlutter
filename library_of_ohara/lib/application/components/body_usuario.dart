@@ -3,6 +3,7 @@ import 'package:library_of_ohara/application/components/book_card.dart';
 import 'package:library_of_ohara/application/model/usuario.dart';
 import 'package:library_of_ohara/application/model/usuario_libro.dart';
 import 'package:library_of_ohara/application/providers/app_provider.dart';
+import 'package:library_of_ohara/themes/colors.dart';
 import 'package:provider/provider.dart';
 
 class BodyUsuario extends StatelessWidget {
@@ -27,11 +28,11 @@ class BodyUsuario extends StatelessWidget {
     return listaLibrosUsuario.isEmpty
         ? Center(child: Text("Aun no tienes libros en la bd"))
         : GridView.builder(
-            itemCount: listaLibrosUsuario.length,
+            itemCount: usuario.libros.length,
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: crossAxisCount),
             itemBuilder: (context, index) {
-              return Card(
+              return Card(color: backgroundColor,
                 child: BookCard(libro: usuario.libros[index]),
               );
             },

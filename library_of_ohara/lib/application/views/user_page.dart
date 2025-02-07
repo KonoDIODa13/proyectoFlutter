@@ -21,29 +21,36 @@ class _UserPageState extends State<UserPage> {
   late Usuario usuario;
   late List<UsuarioLibro> listaLibrosUsuario;
   int indice = 1;
-  Widget? body;
+  Widget? body= BodyUsuario();
 
   changeWindow(int index) async {
-    setState(() {
-      switch (index) {
-        case 0:
+    switch (index) {
+      case 0:
+        setState(() {
           indice = index;
           body = Biblioteca();
-          break;
-        case 1:
+        });
+        break;
+      case 1:
+        setState(() {
           indice = index;
           body = BodyUsuario();
-          break;
-        default:
-      }
-    });
+        });
+        break;
+         case 2:
+        setState(() {
+          indice = index;
+          body = Center(child: Text("en desarrollo"),);
+        });
+        break;
+      default:
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     usuario = provider(context, listen: false).usuario;
     listaLibrosUsuario = provider(context).listaLibrosUsuario;
-    body= BodyUsuario();
     return Scaffold(
       drawer: Drawwer(),
       appBar: AppBar(
@@ -56,9 +63,10 @@ class _UserPageState extends State<UserPage> {
         leading: Builder(builder: (context) {
           return GestureDetector(
             child: CircleAvatar(
-              backgroundImage: NetworkImage(usuario.getImagen.toString().isEmpty
-                  ? "https://preview.redd.it/h5gnz1ji36o61.png?width=225&format=png&auto=webp&s=84379f8d3bbe593a2e863c438cd03e84c8a474fa"
-                  : usuario.getImagen()),
+              /*backgroundImage: NetworkImage(usuario.getImagen.toString().isEmpty
+                  ? "https://st3.depositphotos.com/3538469/16455/v/450/depositphotos_164553890-stock-illustration-vector-user-icon.jpg"
+                  : usuario.getImagen()),*/
+                  backgroundImage: NetworkImage("https://st3.depositphotos.com/3538469/16455/v/450/depositphotos_164553890-stock-illustration-vector-user-icon.jpg"),
             ),
             onTap: () {
               Scaffold.of(context).openDrawer();
@@ -83,6 +91,13 @@ class _UserPageState extends State<UserPage> {
               ),
               backgroundColor: backgroundColor,
               label: "Inicio"),
+          BottomNavigationBarItem(
+              icon: Icon(
+                Icons.my_library_books,
+                color: titleColor,
+              ),
+              backgroundColor: backgroundColor,
+              label: "Tus Libros"),
         ],
         backgroundColor: backgroundColor2,
         currentIndex: indice,

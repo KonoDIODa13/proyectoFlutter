@@ -63,7 +63,7 @@ class _LoginState extends State<Login> {
         inicioUsuario(context);
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: const Text("error al insertar dicho usuario.")));
+            SnackBar(content: const Text("error al acceder con dicho usuario.")));
       }
     }
   }

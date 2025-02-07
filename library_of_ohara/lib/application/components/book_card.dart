@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:library_of_ohara/application/model/usuario_libro.dart';
 import 'package:library_of_ohara/application/providers/app_provider.dart';
 import 'package:library_of_ohara/application/views/book_window.dart';
 import 'package:library_of_ohara/application/model/libro.dart';
@@ -11,6 +12,7 @@ class BookCard extends StatelessWidget {
   BookCard({super.key, required this.libro});
   final provider = Provider.of<AppProvider>;
   late Usuario usuario;
+  late bool yaEnLista = false;
 
   @override
   Widget build(BuildContext context) {

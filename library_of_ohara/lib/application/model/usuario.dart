@@ -77,11 +77,13 @@ class Usuario {
 
   void addlibros(
       List<UsuarioLibro> listaLibrosUsuario, List<Libro> librosTotales) {
+    // de esta manera, saco una lista con los ids de libros que tiene el usuario
+    Set<int> idsLibrosUsuario = {
+      for (var usuarioLibro in listaLibrosUsuario) usuarioLibro.libroId
+    };
     for (var libro in librosTotales) {
-      for (var usuarioLibro in listaLibrosUsuario) {
-        if (libro.getID() == usuarioLibro.usuarioId) {
-          libros.add(libro);
-        }
+      if (idsLibrosUsuario.contains(libro.getID())) {
+        libros.add(libro);
       }
     }
   }

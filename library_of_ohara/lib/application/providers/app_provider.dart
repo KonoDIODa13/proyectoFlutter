@@ -26,12 +26,11 @@ class AppProvider extends ChangeNotifier {
     var user = await dbManager.login(nombre, contra);
     if (user != null) {
       usuario = user;
-      print("pre listalibrosusuario");
+      listaLibrosUsuario = await getLibrosByUsuario(usuario.id!);
       rellenarLibrosDeUsuarios();
-      print("pos listalibrosusuario");
-
+      return usuario;
     }
-    return usuario;
+    return null;
   }
 
   Future<Usuario?> register(Usuario preUsuario) async {
@@ -42,13 +41,14 @@ class AppProvider extends ChangeNotifier {
     var user = await dbManager.register(preUsuario);
     if (user != null) {
       usuario = user;
+      listaLibrosUsuario = await getLibrosByUsuario(usuario.id!);
       rellenarLibrosDeUsuarios();
+      return usuario;
     }
-    return usuario;
+    return null;
   }
 
   Future<void> rellenarLibrosDeUsuarios() async {
-    listaLibrosUsuario = await getLibrosByUsuario(usuario.id!);
     usuario.addlibros(listaLibrosUsuario, libros);
   }
 
@@ -61,6 +61,21 @@ class AppProvider extends ChangeNotifier {
   }
 
   Future<bool> insertarLibroAUsuario(int idUsuario, int idLibro) async {
-    return await dbManager.insertarLibroAUsuario(idUsuario, idLibro);
+    bool insertado = false;
+    if (await dbManager.insertarLibroAUsuario(idUsuario, idLibro)) {
+      listaLibrosUsuario = await getLibrosByUsuario(usuario.id!);
+      insertado = true;
+    }
+    return insertado;
+  }
+
+  cerrarSesion() {
+    usuario.nombre = "";
+    usuario.contrasena = "";
+    usuario.gmail = "";
+    usuario.imagen = "";
+    usuario.id = null;
+    usuario.libros.clear();
+    notifyListeners();
   }
 }

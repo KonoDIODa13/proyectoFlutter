@@ -16,7 +16,7 @@ class _DrawwerState extends State<Drawwer> {
   final provider = Provider.of<AppProvider>;
 
   cerrarSesion(BuildContext context) async {
-    //await Provider.of<AppProvider>(context).cerrarSesion();
+    provider(context,listen: false).cerrarSesion();
     Navigator.push(context, MaterialPageRoute(builder: (context) => InitApp()));
   }
 
@@ -27,7 +27,6 @@ class _DrawwerState extends State<Drawwer> {
       if (value == null || value.isEmpty) {
         return 'Por favor, ingresa la url de la imagen.';
       }
-
       return null;
     }
 
@@ -94,59 +93,11 @@ class _DrawwerState extends State<Drawwer> {
                   Text("Cerrar Sesión", style: TextStyle(color: titleColor))
                 ],
               ),
-            )
-          ],
-        )
-
-        /*child: ListView(
-        padding: EdgeInsets.only(left: 50),
-        children: [
-          GestureDetector(
-            onTap: modificarUsuario(),
-            child: Row(children: [
-              Icon(
-                Icons.manage_accounts,
-                color: titleColor,
-                size: 40,
-              ),
-              Text(
-                "Modificar Usuario",
-                style: TextStyle(color: titleColor),
-              )
-            ]),
-          ),
-          GestureDetector(
-            //onTap: cerrarSesion(context),
-            child: Row(children: [
-              Icon(
-                Icons.logout,
-                color: titleColor,
-                size: 40,
-              ),
-              Text(
-                "Cerrar Sesión",
-                style: TextStyle(color: titleColor),
-              )
-            ]),
-          ),
-          ElevatedButton(onPressed: cambiarImagen, child: Text("cambiar imagen")),
-          /*ElevatedButton(
-              style: ElevatedButton.styleFrom(backgroundColor: backgroundColor),
-              onPressed: () {
+              onTap: () {
                 cerrarSesion(context);
               },
-              child: Row(
-                children: [
-                  Icon(
-                    Icons.logout,
-                    color: titleColor,
-                    size: 40,
-                  ),
-                  Text("Cerrar Sesión", style: TextStyle(color: titleColor))
-                ],
-              ))*/
-        ],
-      ),*/
-        );
+            )
+          ],
+        ));
   }
 }
