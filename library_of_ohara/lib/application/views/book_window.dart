@@ -7,6 +7,7 @@ import 'package:library_of_ohara/themes/colors.dart';
 import 'package:library_of_ohara/themes/fonts.dart';
 import 'package:provider/provider.dart';
 
+/// ventana en la que vemos las características de los libros a su vez de
 class BookWindow extends StatelessWidget {
   final Libro libro;
   BookWindow({super.key, required this.libro});
@@ -14,6 +15,8 @@ class BookWindow extends StatelessWidget {
   final provider = Provider.of<AppProvider>;
   late bool yaEnLista = false;
 
+  /// en la vista, tendremos tanto la imagen, como el titulo, la descripcion, etc del libro
+  /// así como el botón que en función de que este en la lista, nos permitirá añadirlo a la lista o no.
   Widget build(BuildContext context) {
     usuario = provider(context, listen: false).usuario;
     for (var libroDelUsuario in usuario.libros) {
@@ -158,6 +161,8 @@ class BookWindow extends StatelessWidget {
             ),
           ),
         ),
+
+        /// el botón este para ir para atrás, nos devolverá a la página de usuario.
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             Navigator.push(

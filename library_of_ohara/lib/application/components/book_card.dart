@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:library_of_ohara/application/model/usuario_libro.dart';
 import 'package:library_of_ohara/application/providers/app_provider.dart';
 import 'package:library_of_ohara/application/views/book_window.dart';
 import 'package:library_of_ohara/application/model/libro.dart';
@@ -7,12 +6,15 @@ import 'package:library_of_ohara/application/model/usuario.dart';
 import 'package:library_of_ohara/themes/colors.dart';
 import 'package:provider/provider.dart';
 
+/// componente para cada una de las cartas con los libros.
+/// es sencilla pero funcional asi que messirve.
 class BookCard extends StatelessWidget {
   final Libro libro;
   BookCard({super.key, required this.libro});
   final provider = Provider.of<AppProvider>;
   late Usuario usuario;
 
+  /// en este componente, se creará una carta para cada libro.
   @override
   Widget build(BuildContext context) {
     usuario = provider(context, listen: false).usuario;

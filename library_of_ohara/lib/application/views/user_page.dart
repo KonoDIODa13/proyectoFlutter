@@ -16,6 +16,7 @@ class UserPage extends StatefulWidget {
   State<UserPage> createState() => _UserPageState();
 }
 
+/// esta sera la vista del usuario una vez iniciado.
 class _UserPageState extends State<UserPage> {
   final provider = Provider.of<AppProvider>;
   late Usuario usuario;
@@ -23,6 +24,7 @@ class _UserPageState extends State<UserPage> {
   int indice = 1;
   Widget? body = BodyUsuario();
 
+  /// función que se encarga de el cambio de pestañas entre la biblioteca y los datos del usuario.
   changeWindow(int index) async {
     switch (index) {
       case 0:
@@ -37,16 +39,11 @@ class _UserPageState extends State<UserPage> {
           body = BodyUsuario();
         });
         break;
-      /* case 2:
-        setState(() {
-          indice = index;
-          body = Center(child: Text("en desarrollo"),);
-        });
-        break;*/
       default:
     }
   }
 
+  /// en esta vista, instancio el drawer que veremos si pulsamos en la foto para poder salir de la aplicación.
   @override
   Widget build(BuildContext context) {
     usuario = provider(context, listen: false).usuario;
@@ -63,9 +60,6 @@ class _UserPageState extends State<UserPage> {
         leading: Builder(builder: (context) {
           return GestureDetector(
             child: CircleAvatar(
-              /*backgroundImage: NetworkImage(usuario.getImagen.toString().isEmpty
-                  ? "https://st3.depositphotos.com/3538469/16455/v/450/depositphotos_164553890-stock-illustration-vector-user-icon.jpg"
-                  : usuario.getImagen()),*/
               backgroundImage: NetworkImage(
                   "https://st3.depositphotos.com/3538469/16455/v/450/depositphotos_164553890-stock-illustration-vector-user-icon.jpg"),
             ),
@@ -92,13 +86,6 @@ class _UserPageState extends State<UserPage> {
               ),
               backgroundColor: backgroundColor,
               label: "Inicio"),
-          /*BottomNavigationBarItem(
-              icon: Icon(
-                Icons.my_library_books,
-                color: titleColor,
-              ),
-              backgroundColor: backgroundColor,
-              label: "Tus Libros"),*/
         ],
         backgroundColor: backgroundColor2,
         currentIndex: indice,

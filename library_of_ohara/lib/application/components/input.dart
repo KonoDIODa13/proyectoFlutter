@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:library_of_ohara/themes/colors.dart';
 
+/// los campos de texto que utilizo en el formulario.
 class Input extends StatefulWidget {
   final TextEditingController controlador;
   final String etiqueta;
@@ -20,25 +21,26 @@ class Input extends StatefulWidget {
 }
 
 class TextfieldState extends State<Input> {
+  /// este componente se verá como un textformfield pero ya modificado
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.all(15),
-      //width: View.of(context).physicalSize.width / 4,
-
       child: TextFormField(
         controller: widget.controlador,
         decoration: InputDecoration(
             label: Text(
           widget.etiqueta,
           textAlign: TextAlign.center,
-          style: TextStyle(color: titleColor,),
+          style: TextStyle(
+            color: titleColor,
+          ),
         )),
         style: TextStyle(color: titleColor),
         obscureText: widget.esOculto,
         keyboardType: widget.tipoTeclado,
         validator: widget.validacion,
       ),
-      );
+    );
   }
 }

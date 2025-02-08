@@ -19,10 +19,12 @@ class _LoginState extends State<Login> {
   final _formKey = GlobalKey<FormState>();
   final provider = Provider.of<AppProvider>;
 
+  /// aqui instancio los controladores de los inputs que tengo para iniciar sesión.
   TextEditingController nombreController = TextEditingController();
   TextEditingController contrasenaController = TextEditingController();
   TextEditingController contrasena2Controller = TextEditingController();
 
+  /// aqui tengo las funciones para validar los campos de texto.
   String? validatorNombre(String? value) {
     if (value == null || value.isEmpty) {
       return 'Por favor, ingresa tu nombre.';
@@ -53,37 +55,42 @@ class _LoginState extends State<Login> {
     return null;
   }
 
-  login(BuildContext context) async {
+  /// función que si los campos estan validados, realizara la comprobacion de si existe un usuario
+  /// con dichos datos en la bd. si existe, iniciará el usuario.
+  void login() async {
     if (_formKey.currentState!.validate()) {
       var nombre = nombreController.text;
       var contra = contrasenaController.text;
       var usuario =
           await provider(context, listen: false).login(nombre, contra);
       if (usuario != null) {
-        inicioUsuario(context);
+        inicioUsuario();
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: const Text("error al acceder con dicho usuario.")));
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: const Text("error al acceder con dicho usuario.")));
       }
     }
   }
 
-  inicioUsuario(
-    BuildContext context,
-  ) {
+  /// función que lleva al usuario a la página principal del usuario
+  void inicioUsuario() {
     Navigator.push(
         context, MaterialPageRoute(builder: (context) => UserPage()));
   }
 
-  void volver(BuildContext context) {
+  /// función para volver al inicio.
+  void volver() {
     Navigator.push(context, MaterialPageRoute(builder: (context) => InitApp()));
   }
 
-  void register(BuildContext context) {
+  /// función para ir al registro a crear un nuevo usuario.
+  void register() {
     Navigator.push(
         context, MaterialPageRoute(builder: (context) => Register()));
   }
 
+  /// aqui renderizo tanto el formulario con los tres inputs como el botón para acceder al usuario.
+  /// también, los botones de atras y de registrarse
   @override
   Widget build(BuildContext context) {
     final double screenWidth = MediaQuery.of(context).size.width;
@@ -120,9 +127,6 @@ class _LoginState extends State<Login> {
                   key: _formKey,
                   child: Column(
                     children: [
-                      /*Text("Inicio de Sesión",
-                          style: TextStyle(color: titleColor, fontSize: 30),
-                          textAlign: TextAlign.center),*/
                       Input(
                           controlador: nombreController,
                           etiqueta: "Nombre:",
@@ -143,9 +147,7 @@ class _LoginState extends State<Login> {
                         child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
                                 backgroundColor: backgroundColor),
-                            onPressed: () {
-                              login(context);
-                            },
+                            onPressed: login,
                             child: Text(
                               "Iniciar Sesión",
                               style: TextStyle(color: titleColor),
@@ -157,9 +159,7 @@ class _LoginState extends State<Login> {
             MouseRegion(
                 cursor: SystemMouseCursors.click,
                 child: GestureDetector(
-                  onTap: () {
-                    register(context);
-                  },
+                  onTap: register,
                   child: Text(
                     "Registrarse",
                     style: TextStyle(
@@ -171,9 +171,7 @@ class _LoginState extends State<Login> {
           ],
         )),
         floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            volver(context);
-          },
+          onPressed: volver,
           backgroundColor: backgroundColor2,
           child: Icon(
             Icons.keyboard_double_arrow_left,

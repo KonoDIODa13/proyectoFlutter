@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:library_of_ohara/application/model/usuario_libro.dart';
 import 'package:library_of_ohara/application/views/init_app.dart';
-import 'package:library_of_ohara/application/views/login.dart';
 import 'package:library_of_ohara/application/views/user_page.dart';
 import 'package:library_of_ohara/application/components/input.dart';
 import 'package:library_of_ohara/application/model/usuario.dart';
@@ -21,12 +19,14 @@ class _RegisterState extends State<Register> {
   final _formKey = GlobalKey<FormState>();
   final provider = Provider.of<AppProvider>;
 
+  /// aqui instancio los controladores de los inputs que tengo para iniciar sesión.
   TextEditingController nombreController = TextEditingController();
 
   TextEditingController gmailController = TextEditingController();
 
   TextEditingController contrasenaController = TextEditingController();
 
+  /// aqui tengo las funciones para validar los campos de texto.
   String? validatorNombre(String? value) {
     if (value == null || value.isEmpty) {
       return 'Por favor, ingresa tu nombre.';
@@ -56,7 +56,9 @@ class _RegisterState extends State<Register> {
     return null;
   }
 
-  crearCuenta(BuildContext context) async {
+  /// función que si los campos estan validados, realizara la comprobacion de si existe un usuario
+  /// con dichos datos en la bd. Si no existe, creará el usuario.
+  crearCuenta() async {
     if (_formKey.currentState!.validate()) {
       var nombre = nombreController.text;
       var contrasena = contrasenaController.text;
@@ -65,7 +67,7 @@ class _RegisterState extends State<Register> {
           Usuario(nombre: nombre, gmail: gmail, contrasena: contrasena);
       var usuario = await provider(context, listen: false).register(preUsuario);
       if (usuario != null) {
-        inicioUsuario(context);
+        inicioUsuario();
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: const Text("error al insertar dicho usuario.")));
@@ -73,20 +75,25 @@ class _RegisterState extends State<Register> {
     }
   }
 
-  inicioUsuario(BuildContext context) {
+  /// función que lleva al usuario a la página principal del usuario
+  void inicioUsuario() {
     Navigator.push(
         context, MaterialPageRoute(builder: (context) => UserPage()));
   }
 
-  void volver(BuildContext context) {
-    //Navigator.pop(context); esto no me vale en el mismo momento que le pulsas al enlace de abajo
+  /// función para volver al inicio.
+  void volver() {
     Navigator.push(context, MaterialPageRoute(builder: (context) => InitApp()));
   }
 
-  void login(BuildContext context) {
-    Navigator.push(context, MaterialPageRoute(builder: (context) => Login()));
+  /// función para ir al registro a crear un nuevo usuario.
+  void login() {
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => Register()));
   }
 
+  /// aqui renderizo tanto el formulario con los tres inputs como el botón para acceder al usuario.
+  /// también, los botones de atras y de registrarse
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -132,9 +139,7 @@ class _RegisterState extends State<Register> {
                         child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
                                 backgroundColor: backgroundColor),
-                            onPressed: () {
-                              crearCuenta(context);
-                            },
+                            onPressed: crearCuenta,
                             child: Text(
                               "Crear Cuenta",
                               style: TextStyle(color: titleColor),
@@ -146,9 +151,7 @@ class _RegisterState extends State<Register> {
             MouseRegion(
                 cursor: SystemMouseCursors.click,
                 child: GestureDetector(
-                  onTap: () {
-                    login(context);
-                  },
+                  onTap: login,
                   child: Text(
                     "Login",
                     style: TextStyle(
@@ -160,9 +163,7 @@ class _RegisterState extends State<Register> {
           ],
         )),
         floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            volver(context);
-          },
+          onPressed: volver,
           backgroundColor: backgroundColor2,
           child: Icon(
             Icons.keyboard_double_arrow_left,

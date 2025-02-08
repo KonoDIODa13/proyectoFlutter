@@ -6,20 +6,18 @@ import 'package:library_of_ohara/application/providers/app_provider.dart';
 import 'package:library_of_ohara/themes/colors.dart';
 import 'package:provider/provider.dart';
 
-class BodyUsuario extends StatefulWidget {
+/// es la vista de la página del usuario.
+class BodyUsuario extends StatelessWidget {
   BodyUsuario({super.key});
 
-  @override
-  State<BodyUsuario> createState() => _BodyUsuarioState();
-}
-
-class _BodyUsuarioState extends State<BodyUsuario> {
   final provider = Provider.of<AppProvider>;
 
   late Usuario usuario;
 
   late List<UsuarioLibro> listaLibrosUsuario;
 
+  /// se comprobará si tiene libros en la lista y mostrará un mensaje acorde.
+  /// si hay libros, nos mostrará en forma de cartas los libros.
   @override
   Widget build(BuildContext context) {
     listaLibrosUsuario = provider(context).listaLibrosUsuario;
@@ -36,10 +34,17 @@ class _BodyUsuarioState extends State<BodyUsuario> {
     return Column(
       children: [
         Center(
-          child: Text("Tus Libros", style: TextStyle(color: titleColor, fontSize: 20),),
+          child: Text(
+            "Tus Libros",
+            style: TextStyle(color: titleColor, fontSize: 20),
+          ),
         ),
         listaLibrosUsuario.isEmpty
-            ? Center(child: Text("Aun no tienes libros en la bd"))
+            ? Center(
+                child: Text(
+                "Aun no tienes libros en la bd",
+                style: TextStyle(fontSize: 20, color: titleColor)
+              ))
             : Expanded(
                 child: GridView.builder(
                 itemCount: usuario.libros.length,

@@ -12,7 +12,10 @@ class InitApp extends StatefulWidget {
 }
 
 class _InitAppState extends State<InitApp> {
-  void login(BuildContext context) {
+  /// siempre que pueda, me gustar sacar las funciones fuera del renderizado.
+  /// en este caso, son dos botones que llevan a dos pantallas,
+  /// la de inicio de sesión y la de crear una nueva cuenta.
+  void login() {
     Navigator.push(
         context,
         MaterialPageRoute(
@@ -20,18 +23,21 @@ class _InitAppState extends State<InitApp> {
         ));
   }
 
-  void register(BuildContext context) {
+  void register() {
     Navigator.push(
         context, MaterialPageRoute(builder: (context) => Register()));
   }
 
+  /// se que en esta vista, esta como muy vacia. me hubiera gustado
+  /// meter algun tipo de descripción de lo que puedes hacer con esta aplicación
+  /// pero seguro que el usuario nunca la leeria asi que uWu.
   @override
   Widget build(BuildContext context) {
     final double screenWidth = MediaQuery.of(context).size.width;
     final double screenHeight = MediaQuery.of(context).size.height;
 
-    double containerWidth= screenWidth*0.4;
-    double containerHeight= screenHeight*0.4;
+    double containerWidth = screenWidth * 0.4;
+    double containerHeight = screenHeight * 0.4;
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
@@ -58,9 +64,7 @@ class _InitAppState extends State<InitApp> {
                 child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                         backgroundColor: backgroundColor2),
-                    onPressed: () {
-                      login(context);
-                    },
+                    onPressed: login,
                     child: Text(
                       "Iniciar Sesión",
                       style: TextStyle(color: titleColor),
@@ -71,9 +75,7 @@ class _InitAppState extends State<InitApp> {
                 child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                         backgroundColor: backgroundColor2),
-                    onPressed: () {
-                      register(context);
-                    },
+                    onPressed: register,
                     child: Text(
                       "Crear una Cuenta",
                       style: TextStyle(color: titleColor),
