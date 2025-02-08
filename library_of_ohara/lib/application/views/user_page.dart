@@ -21,7 +21,7 @@ class _UserPageState extends State<UserPage> {
   late Usuario usuario;
   late List<UsuarioLibro> listaLibrosUsuario;
   int indice = 1;
-  Widget? body= BodyUsuario();
+  Widget? body = BodyUsuario();
 
   changeWindow(int index) async {
     switch (index) {
@@ -37,12 +37,12 @@ class _UserPageState extends State<UserPage> {
           body = BodyUsuario();
         });
         break;
-         case 2:
+      /* case 2:
         setState(() {
           indice = index;
           body = Center(child: Text("en desarrollo"),);
         });
-        break;
+        break;*/
       default:
     }
   }
@@ -66,7 +66,8 @@ class _UserPageState extends State<UserPage> {
               /*backgroundImage: NetworkImage(usuario.getImagen.toString().isEmpty
                   ? "https://st3.depositphotos.com/3538469/16455/v/450/depositphotos_164553890-stock-illustration-vector-user-icon.jpg"
                   : usuario.getImagen()),*/
-                  backgroundImage: NetworkImage("https://st3.depositphotos.com/3538469/16455/v/450/depositphotos_164553890-stock-illustration-vector-user-icon.jpg"),
+              backgroundImage: NetworkImage(
+                  "https://st3.depositphotos.com/3538469/16455/v/450/depositphotos_164553890-stock-illustration-vector-user-icon.jpg"),
             ),
             onTap: () {
               Scaffold.of(context).openDrawer();
@@ -91,13 +92,13 @@ class _UserPageState extends State<UserPage> {
               ),
               backgroundColor: backgroundColor,
               label: "Inicio"),
-          BottomNavigationBarItem(
+          /*BottomNavigationBarItem(
               icon: Icon(
                 Icons.my_library_books,
                 color: titleColor,
               ),
               backgroundColor: backgroundColor,
-              label: "Tus Libros"),
+              label: "Tus Libros"),*/
         ],
         backgroundColor: backgroundColor2,
         currentIndex: indice,

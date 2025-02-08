@@ -162,6 +162,17 @@ class DbManager {
     return insertado;
   }
 
+  Future<bool> eliminarLibroAUsuario(int idUsuario, int idLibro) async {
+    bool eliminado = false;
+    if (await comprobarExiste(idUsuario, idLibro)) {
+      await db.delete("usuarios_libros",
+          where: "usuario_id=? and libro_id=?",
+          whereArgs: [idUsuario, idLibro]);
+      eliminado = true;
+    }
+    return eliminado;
+  }
+
   Future<bool> comprobarExiste(idUsuario, idLibro) async {
     bool existe = false;
     var query = await db.query("usuarios_libros",

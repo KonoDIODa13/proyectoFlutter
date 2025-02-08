@@ -65,8 +65,24 @@ class AppProvider extends ChangeNotifier {
     if (await dbManager.insertarLibroAUsuario(idUsuario, idLibro)) {
       listaLibrosUsuario = await getLibrosByUsuario(usuario.id!);
       insertado = true;
+      recargarLibros(listaLibrosUsuario, libros);
     }
     return insertado;
+  }
+
+  Future<bool> eliminarLibroAUsuario(int idUsuario, int idLibro) async {
+    bool eliminado = false;
+    if (await dbManager.eliminarLibroAUsuario(idUsuario, idLibro)) {
+      listaLibrosUsuario = await getLibrosByUsuario(usuario.id!);
+      eliminado = true;
+      recargarLibros(listaLibrosUsuario, libros);
+    }
+    return eliminado;
+  }
+
+  recargarLibros(
+      List<UsuarioLibro> listalibroUsuario, List<Libro> librosTotales) {
+    usuario.addlibros(listaLibrosUsuario, librosTotales);
   }
 
   cerrarSesion() {

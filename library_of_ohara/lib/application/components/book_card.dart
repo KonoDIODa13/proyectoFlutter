@@ -12,7 +12,6 @@ class BookCard extends StatelessWidget {
   BookCard({super.key, required this.libro});
   final provider = Provider.of<AppProvider>;
   late Usuario usuario;
-  late bool yaEnLista = false;
 
   @override
   Widget build(BuildContext context) {

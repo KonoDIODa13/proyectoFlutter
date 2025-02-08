@@ -1,3 +1,5 @@
+//tal y como ves, en este fichero estan los datos de los libros por si en alguna ocasión tenia que borrar la bd.
+
 // mistborn I
     /*Libro libro1 = Libro(
         titulo: "El Imperio Final (Mistborn I)",

@@ -15,13 +15,18 @@ class Drawwer extends StatefulWidget {
 class _DrawwerState extends State<Drawwer> {
   final provider = Provider.of<AppProvider>;
 
-  cerrarSesion(BuildContext context) async {
+  void cerrarSesion() {
     provider(context,listen: false).cerrarSesion();
     Navigator.push(context, MaterialPageRoute(builder: (context) => InitApp()));
   }
-
-  cambiarImagen() {
-    var controlador = TextEditingController();
+  void modificarDatosUsuario(){
+ ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: const Text("Funcionalidad no implementada.")));   
+  }
+  void cambiarImagen() {
+ ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: const Text("Funcionalidad no implementada.")));
+    /*var controlador = TextEditingController();
     var etiqueta = "Cambiar imagen:";
     String? validar(String? value) {
       if (value == null || value.isEmpty) {
@@ -46,7 +51,9 @@ class _DrawwerState extends State<Drawwer> {
     );
   }
 
-  modificarUsuario() {}
+  modificarUsuario() {
+      }*/
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -67,9 +74,7 @@ class _DrawwerState extends State<Drawwer> {
                   )
                 ],
               ),
-              onTap: () {
-                modificarUsuario();
-              },
+              onTap: modificarDatosUsuario
             ),
             ListTile(
               title: Row(
@@ -81,7 +86,7 @@ class _DrawwerState extends State<Drawwer> {
                   )
                 ],
               ),
-              onTap: () {},
+              onTap: cambiarImagen
             ),
             ListTile(
               title: Row(
@@ -93,9 +98,9 @@ class _DrawwerState extends State<Drawwer> {
                   Text("Cerrar Sesión", style: TextStyle(color: titleColor))
                 ],
               ),
-              onTap: () {
-                cerrarSesion(context);
-              },
+              onTap: 
+                cerrarSesion
+              
             )
           ],
         ));

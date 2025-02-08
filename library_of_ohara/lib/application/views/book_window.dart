@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:library_of_ohara/application/model/libro.dart';
 import 'package:library_of_ohara/application/model/usuario.dart';
 import 'package:library_of_ohara/application/providers/app_provider.dart';
+import 'package:library_of_ohara/application/views/user_page.dart';
 import 'package:library_of_ohara/themes/colors.dart';
 import 'package:library_of_ohara/themes/fonts.dart';
 import 'package:provider/provider.dart';
@@ -48,7 +49,7 @@ class BookWindow extends StatelessWidget {
           ),
           centerTitle: true,
         ),
-        body: Container(
+        body: SizedBox(
           height: screenHeight,
           child: Card(
             color: backgroundCardColor,
@@ -98,7 +99,32 @@ class BookWindow extends StatelessWidget {
                       ),
                       SizedBox(height: espacioEntre),
                       yaEnLista
-                          ? Text("usted ya tiene este libro en tu lista")
+                          ? ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                  backgroundColor: backgroundColor2),
+                              onPressed: () async {
+                                if (await Provider.of<AppProvider>(context,
+                                        listen: false)
+                                    .eliminarLibroAUsuario(
+                                        usuario.getID(), libro.getID())) {
+                                  provider(context, listen: false)
+                                      .listaLibrosUsuario;
+
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                          content: const Text(
+                                              "Libro eliminado de la lista con exito.")));
+                                } else {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                          content: const Text(
+                                              "No se puede añadir a la lista.")));
+                                }
+                              },
+                              child: Text(
+                                "Eliminar de la lista",
+                                style: TextStyle(color: titleColor),
+                              ))
                           : ElevatedButton(
                               style: ElevatedButton.styleFrom(
                                   backgroundColor: backgroundColor2),
@@ -107,6 +133,9 @@ class BookWindow extends StatelessWidget {
                                         listen: false)
                                     .insertarLibroAUsuario(
                                         usuario.getID(), libro.getID())) {
+                                  provider(context, listen: false)
+                                      .listaLibrosUsuario;
+
                                   ScaffoldMessenger.of(context).showSnackBar(
                                       SnackBar(
                                           content: const Text(
@@ -131,7 +160,8 @@ class BookWindow extends StatelessWidget {
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            Navigator.pop(context);
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => UserPage()));
           },
           backgroundColor: backgroundColor2,
           child: Icon(

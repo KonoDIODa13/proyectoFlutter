@@ -77,6 +77,7 @@ class Usuario {
 
   void addlibros(
       List<UsuarioLibro> listaLibrosUsuario, List<Libro> librosTotales) {
+        libros.clear();
     // de esta manera, saco una lista con los ids de libros que tiene el usuario
     Set<int> idsLibrosUsuario = {
       for (var usuarioLibro in listaLibrosUsuario) usuarioLibro.libroId

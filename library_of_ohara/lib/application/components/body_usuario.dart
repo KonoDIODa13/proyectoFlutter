@@ -6,11 +6,20 @@ import 'package:library_of_ohara/application/providers/app_provider.dart';
 import 'package:library_of_ohara/themes/colors.dart';
 import 'package:provider/provider.dart';
 
-class BodyUsuario extends StatelessWidget {
-  final provider = Provider.of<AppProvider>;
+class BodyUsuario extends StatefulWidget {
   BodyUsuario({super.key});
+
+  @override
+  State<BodyUsuario> createState() => _BodyUsuarioState();
+}
+
+class _BodyUsuarioState extends State<BodyUsuario> {
+  final provider = Provider.of<AppProvider>;
+
   late Usuario usuario;
+
   late List<UsuarioLibro> listaLibrosUsuario;
+
   @override
   Widget build(BuildContext context) {
     listaLibrosUsuario = provider(context).listaLibrosUsuario;
@@ -24,18 +33,23 @@ class BodyUsuario extends StatelessWidget {
     if (screenWidth > 900) {
       crossAxisCount = 4;
     }
-
-    return listaLibrosUsuario.isEmpty
-        ? Center(child: Text("Aun no tienes libros en la bd"))
-        : GridView.builder(
-            itemCount: usuario.libros.length,
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: crossAxisCount),
-            itemBuilder: (context, index) {
-              return Card(color: backgroundColor,
-                child: BookCard(libro: usuario.libros[index]),
-              );
-            },
-          );
+    return Column(
+      children: [
+        Center(
+          child: Text("Tus Libros", style: TextStyle(color: titleColor, fontSize: 20),),
+        ),
+        listaLibrosUsuario.isEmpty
+            ? Center(child: Text("Aun no tienes libros en la bd"))
+            : Expanded(
+                child: GridView.builder(
+                itemCount: usuario.libros.length,
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: crossAxisCount),
+                itemBuilder: (context, index) {
+                  return BookCard(libro: usuario.libros[index]);
+                },
+              ))
+      ],
+    );
   }
 }
